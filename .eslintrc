@@ -1,0 +1,20 @@
+{
+    "extends": "airbnb",
+    "rules": {
+        // Indent with 4 spaces
+        "indent": ["error", 4],
+        // Indent JSX with 4 spaces
+        "react/jsx-indent": ["error", 4],
+        // Indent props with 4 spaces
+        "react/jsx-indent-props": ["error", 4],
+        // allow modification of properties alone
+        "no-param-reassign": ["error", {"props": false}],
+        // allow _id for no-underscore-dangle
+        "no-underscore-dangle": ["error", { "allow": ["_id", "_metadata"] }],
+        // allow alerts
+        "no-alert": ["off"]
+    },
+    "env": {
+        "browser": true
+    }
+}
