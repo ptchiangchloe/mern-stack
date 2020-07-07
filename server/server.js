@@ -6,7 +6,13 @@ import SourceMapSupport from 'source-map-support';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
-import Issue from './issue.js';
+
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+
+import Issue from './issue';
+import config from '../webpack.config';
 
 SourceMapSupport.install();
 
@@ -27,11 +33,6 @@ MongoClient.connect('mongodb://localhost', { useUnifiedTopology: true }).then((c
 }).catch((err) => console.log('ERROR:', err));
 
 if (process.env.NODE_ENV !== 'production') {
-    const webpack = require('webpack');
-    const webpackDevMiddleware = require('webpack-dev-middleware');
-    const webpackHotMiddleware = require('webpack-hot-middleware');
-
-    const config = require('../webpack.config');
     config.entry.app.push('webpack-hot-middleware/client', 'webpack/hot/only-dev-server');
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
@@ -65,10 +66,10 @@ app.post('/api/issues', (req, res) => {
         return;
     }
 
-    db.collection('issues').insertOne(newIssue)
+    db.collection('issues').insertOne(Issue.cleanupIssue(newIssue))
         .then((result) => db.collection('issues').find({ _id: result.insertedId }).limit(1).next())
-        .then((newIssue) => {
-            res.json(newIssue);
+        .then((theNewIssue) => {
+            res.json(theNewIssue);
         })
         .catch((error) => {
             console.log(error);

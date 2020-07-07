@@ -23,27 +23,35 @@ const issueFieldType = {
 // introduce front end validations for more instant user-friendly error messages.
 
 function validateIssue(issue) {
-    for (const field in issueFieldType) {
-        const type = issueFieldType[field];
-        if (!type) {
-            delete issue[field];
-        } else if (type === 'required' && !issue[field]) {
-            return `${field} is required .`;
-        }
-    }
+    const errors = [];
+    Object.keys(issueFieldType).forEach(
+        (field) => {
+            if (issueFieldType[field] === 'required' && !issue[field]) {
+                errors.push(`Missing mandatory field: ${field}`);
+            }
+        },
+    );
 
     if (!validIssueStatus[issue.status]) {
-        return `${issue.status} is not a valid status.`;
+        errors.push(`${issue.status} is not a valid status.`);
     }
 
-    return null;
+    return (errors.length ? errors.join('; ') : null);
 }
 
 // APIs are all about intuitiveness and predictability.
 // REST gives you a framework for how to think about the structure APIs.
 // how to implement and consume APIs.
 
-// Representational state trasfer is a software archietectural style that defines a set of constraints to be used for
-// creating Web services.
+// Representational state trasfer is a software archietectural style that defines
+// a set of constraints to be used for creating Web services.
 
-export default { validateIssue };
+function cleanupIssue(issue) {
+    const cleanedUpIssue = {};
+    Object.keys(issue).forEach((field) => {
+        if (issueFieldType[field]) cleanedUpIssue[field] = issue[field];
+    });
+    return cleanedUpIssue;
+}
+
+export default { validateIssue, cleanupIssue };

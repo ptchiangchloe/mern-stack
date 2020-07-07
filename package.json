@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "compile": "webpack",
     "watch": "webpack-dev-server --hot --inline",
-    "start-hook": "nodemon -w server server/start_hook.js"
+    "start-hook": "nodemon -w server server/start_hook.js",
+    "lint": "eslint --ext jsx,js src server webpack.config.js"
   },
   "author": "Hanyu Jiang",
   "license": "ISC",

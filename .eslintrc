@@ -12,7 +12,9 @@
         // allow _id for no-underscore-dangle
         "no-underscore-dangle": ["error", { "allow": ["_id", "_metadata"] }],
         // allow alerts
-        "no-alert": ["off"]
+        "no-alert": ["off"],
+        // allow console
+        "no-console": ["off"]
     },
     "env": {
         "browser": true
