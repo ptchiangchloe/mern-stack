@@ -1,18 +1,16 @@
 import 'babel-polyfill';
 import SourceMapSupport from 'source-map-support';
 
-// throw new Error('Test!');
-
 import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
 
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
+// import webpack from 'webpack';
+// import webpackDevMiddleware from 'webpack-dev-middleware';
+// import webpackHotMiddleware from 'webpack-hot-middleware';
 
 import Issue from './issue';
-import config from '../webpack.config';
+// import config from '../webpack.config';
 
 SourceMapSupport.install();
 
@@ -32,14 +30,14 @@ MongoClient.connect('mongodb://localhost', { useUnifiedTopology: true }).then((c
     });
 }).catch((err) => console.log('ERROR:', err));
 
-if (process.env.NODE_ENV !== 'production') {
-    config.entry.app.push('webpack-hot-middleware/client', 'webpack/hot/only-dev-server');
-    config.plugins.push(new webpack.HotModuleReplacementPlugin());
+// if (process.env.NODE_ENV !== 'production') {
+//     config.entry.app.push('webpack-hot-middleware/client', 'webpack/hot/only-dev-server');
+//     config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
-    const bundler = webpack(config);
-    app.use(webpackDevMiddleware(bundler, { noInfo: true }));
-    app.use(webpackHotMiddleware(bundler, { log: console.log }));
-}
+//     const bundler = webpack(config);
+//     app.use(webpackDevMiddleware(bundler, { noInfo: true }));
+//     app.use(webpackHotMiddleware(bundler, { log: console.log }));
+// }
 
 app.get('/api/issues', (req, res) => {
     db.collection('issues').find().toArray().then((issues) => {

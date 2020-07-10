@@ -9,6 +9,7 @@ module.exports = {
                 target: 'http://localhost:3000',
             },
         },
+        historyApiFallback: true,
     },
     devtool: 'source-map',
     entry: {
@@ -19,7 +20,6 @@ module.exports = {
         filename: 'app.bundle.js',
     },
     plugins: [],
-    mode: 'development',
     module: {
         rules: [
             {
@@ -39,7 +39,7 @@ module.exports = {
         splitChunks: {
             cacheGroups: {
                 vendor: {
-                    test: /[\\/]node_modules[\\/](react|react-dom|whatwg-fetch)[\\/]/,
+                    test: /[\\/]node_modules[\\/](react|react-dom|whatwg-fetch|react-router)[\\/]/,
                     filename: 'vendor.bundle.js',
                     name: 'vendor',
                     chunks: 'all',

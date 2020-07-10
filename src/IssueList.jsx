@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import 'whatwg-fetch';
 import debug from 'debug';
+import { Link } from 'react-router-dom';
+
 import IssueAdd from './IssueAdd';
 import { IssueFilter } from './IssueFilter';
 
@@ -85,7 +87,7 @@ export default class IssueList extends React.Component {
 }
 
 const IssueTable = ({ issues }) => (
-    <table style={{ borderTop: '3px solid green', padding: '16px' }}>
+    <table style={{ borderTop: '3px solid red', padding: '16px' }}>
         <thead>
             <tr>
                 <th>Id</th>
@@ -107,7 +109,11 @@ const IssueTable = ({ issues }) => (
 
 const IssueRow = ({ issue }) => (
     <tr>
-        <td>{issue._id}</td>
+        <td>
+            <Link to={`/issues/${issue._id}`}>
+                {issue._id.substr(-4)}
+            </Link>
+        </td>
         <td>{issue.status}</td>
         <td>{issue.owner}</td>
         <td>{issue.created.toDateString()}</td>
