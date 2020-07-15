@@ -7,6 +7,10 @@ export default class IssueAdd extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    shouldComponentUpdate() {
+        return false;
+    }
+
     handleSubmit(e) {
         const { createIssue } = this.props;
         const form = document.forms.issueAdd;
@@ -23,6 +27,7 @@ export default class IssueAdd extends React.Component {
     }
 
     render() {
+        console.log('IssueAdd component rendering');
         return (
             <div>
                 <form name="issueAdd" onSubmit={this.handleSubmit}>

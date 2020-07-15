@@ -4,6 +4,7 @@ import SourceMapSupport from 'source-map-support';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
+import path from 'path';
 
 // import webpack from 'webpack';
 // import webpackDevMiddleware from 'webpack-dev-middleware';
@@ -39,8 +40,16 @@ MongoClient.connect('mongodb://localhost', { useUnifiedTopology: true }).then((c
 //     app.use(webpackHotMiddleware(bundler, { log: console.log }));
 // }
 
+
+
 app.get('/api/issues', (req, res) => {
-    db.collection('issues').find().toArray().then((issues) => {
+    const filter = {};
+    console.log(req.query);
+    if (req.query.status) filter.status = req.query.status;
+    if (req.query.effort_lte || req.query.effor_gte) filter.effort = {};
+    if (req.query.effort_lte) filter.effort.$lte = parseInt(req.query.effort_lte, 10);
+    if (req.query.effor_gte) filter.effort.$gte = parseInt(req.query.effort_gte, 10);
+    db.collection('issues').find(filter).toArray().then((issues) => {
         const metadata = { total_count: issues.length };
         res.json({ _metadata: metadata, records: issues });
     })
@@ -73,4 +82,8 @@ app.post('/api/issues', (req, res) => {
             console.log(error);
             res.status(500).json({ message: `Internal Server Error: ${error}` });
         });
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve('static/index.html'));
 });

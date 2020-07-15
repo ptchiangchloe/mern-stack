@@ -27,6 +27,7 @@ module.exports = {
                 loader: 'babel-loader',
                 query: {
                     presets: ['@babel/preset-react', '@babel/preset-env'],
+                    plugins: ['@babel/plugin-proposal-class-properties'],
                     // all transforms and file types other than pure JavaScript require loaders
                     // in webpack. babel-loader 8^ should be match other babel modules 7^
                 },

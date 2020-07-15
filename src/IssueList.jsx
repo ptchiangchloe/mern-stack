@@ -5,23 +5,43 @@ import debug from 'debug';
 import { Link } from 'react-router-dom';
 
 import IssueAdd from './IssueAdd';
-import { IssueFilter } from './IssueFilter';
+import  IssueFilter  from './IssueFilter';
+
 
 const log = debug('app:issueList');
 
 export default class IssueList extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = { issues: [] };
         this.createIssue = this.createIssue.bind(this);
+        this.setFilter = this.setFilter.bind(this);
     }
 
     componentDidMount() {
         this.loadData();
+        // this.testThis = this.testThis.bind(this)
+    }
+
+    componentDidUpdate(prevProps) {
+        const { location } = this.props;
+        const oldQuery = prevProps.location.search;
+        const newQuery = location.search;
+        if (oldQuery === newQuery) {
+            return;
+        }
+        this.loadData();
+    }
+
+    setFilter(query) {
+        this.props.history.push({
+            pathname: this.props.location.pathname, 
+            search: "?" + new URLSearchParams(query)
+        });
     }
 
     loadData() {
-        fetch('/api/issues').then((response) => {
+        fetch(`/api/issues${this.props.location.search}`).then((response) => {
             if (response.ok) {
                 response.json().then((data) => {
                     log(`Total count of records: ${data._metadata.total_count}`);
@@ -73,14 +93,21 @@ export default class IssueList extends React.Component {
 
     render() {
         const { issues } = this.state;
+
         return (
             <div>
-                <h1>Issue Tracker</h1>
-                <IssueFilter />
+                <IssueFilter  setFilter={this.setFilter}
+                    initFilter={this.props.location.search}/>
                 <hr />
                 <IssueTable issues={issues} />
                 <hr />
                 <IssueAdd createIssue={this.createIssue} />
+                <button
+                    type="button"
+                    onClick={this.testThis}
+                >
+                    Click Me
+                </button>
             </div>
         );
     }
@@ -137,4 +164,10 @@ IssueRow.propTypes = {
 
 IssueTable.propTypes = {
     issues: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+IssueList.propTypes = {
+    location: PropTypes.shape({
+        search: PropTypes.string.isRequired,
+    }),
 };
