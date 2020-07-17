@@ -18,7 +18,6 @@ class IssueFilter extends React.Component { // eslint-disable-line
         this.applyFilter = this.applyFilter.bind(this);
         this.resetFilter = this.resetFilter.bind(this);
         this.clearFilter = this.clearFilter.bind(this);
-        
     }
 
     componentWillReceiveProps(newProps) {
@@ -89,7 +88,7 @@ class IssueFilter extends React.Component { // eslint-disable-line
                     <option value="Closed">Closed</option>
                 </select>
                 &nbsp;Effort between:
-                <input size={5} value={this.state.effort_gte} onChange={this.onChangeEffortGte} />
+                <input type="number" size={5} value={this.state.effort_gte} onChange={this.onChangeEffortGte} />
                 <input size={5} value={this.state.effort_lte} onChange={this.onChangeEffortLte} />
                 <button onClick={this.applyFilter}>Apply</button>
                 <button onClick={this.resetFilter} disabled={!this.state.changed}>Reset</button>
@@ -98,7 +97,5 @@ class IssueFilter extends React.Component { // eslint-disable-line
         );
     }
 }
-
-
 
 export default withRouter(IssueFilter); 

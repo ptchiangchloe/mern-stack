@@ -16,6 +16,7 @@ export default class IssueList extends React.Component {
         this.state = { issues: [] };
         this.createIssue = this.createIssue.bind(this);
         this.setFilter = this.setFilter.bind(this);
+        this.deleteIssue = this.deleteIssue.bind(this);
     }
 
     componentDidMount() {
@@ -91,6 +92,16 @@ export default class IssueList extends React.Component {
         }).catch((err) => { alert(`Failed in sending data to server: ${err.message}`); });
     }
 
+    deleteIssue(id) {
+        fetch(`/api/issues/${id}`, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (!response.ok) alert('Failed to delete issue');
+            else this.loadData();
+        })
+    }
+
     render() {
         const { issues } = this.state;
 
@@ -99,7 +110,10 @@ export default class IssueList extends React.Component {
                 <IssueFilter  setFilter={this.setFilter}
                     initFilter={this.props.location.search}/>
                 <hr />
-                <IssueTable issues={issues} />
+                <IssueTable 
+                    issues={issues}
+                    deleteIssue={this.deleteIssue}
+                />
                 <hr />
                 <IssueAdd createIssue={this.createIssue} />
                 <button
@@ -113,7 +127,7 @@ export default class IssueList extends React.Component {
     }
 }
 
-const IssueTable = ({ issues }) => (
+const IssueTable = ({ issues, deleteIssue }) => (
     <table style={{ borderTop: '3px solid red', padding: '16px' }}>
         <thead>
             <tr>
@@ -124,31 +138,39 @@ const IssueTable = ({ issues }) => (
                 <th>Effort</th>
                 <th>Completion Date</th>
                 <th>Title</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             {
-                issues.map((issue) => <IssueRow key={issue._id} issue={issue} />)
+                issues.map((issue) => <IssueRow key={issue._id} issue={issue} deleteIssue={deleteIssue}/>)
             }
         </tbody>
     </table>
 );
 
-const IssueRow = ({ issue }) => (
-    <tr>
-        <td>
-            <Link to={`/issues/${issue._id}`}>
-                {issue._id.substr(-4)}
-            </Link>
-        </td>
-        <td>{issue.status}</td>
-        <td>{issue.owner}</td>
-        <td>{issue.created.toDateString()}</td>
-        <td>{issue.effort}</td>
-        <td>{issue.completionDate ? issue.completionDate.toDateString() : ''}</td>
-        <td>{issue.title}</td>
-    </tr>
-);
+const IssueRow = ({ issue, deleteIssue }) => {
+    function onDeleteClick() {
+        deleteIssue(issue._id);
+    }
+
+    return (
+        <tr>
+            <td>
+                <Link to={`/issues/${issue._id}`}>
+                    {issue._id.substr(-4)}
+                </Link>
+            </td>
+            <td>{issue.status}</td>
+            <td>{issue.owner}</td>
+            <td>{issue.created.toDateString()}</td>
+            <td>{issue.effort}</td>
+            <td>{issue.completionDate ? issue.completionDate.toDateString() : ''}</td>
+            <td>{issue.title}</td>
+            <td><button onClick={onDeleteClick}>Delete</button></td>
+        </tr>
+    );
+}
 
 IssueRow.propTypes = {
     issue: PropTypes.shape({
@@ -164,6 +186,7 @@ IssueRow.propTypes = {
 
 IssueTable.propTypes = {
     issues: PropTypes.arrayOf(PropTypes.object).isRequired,
+    deleteIssue: PropTypes.func.isRequired,
 };
 
 IssueList.propTypes = {
