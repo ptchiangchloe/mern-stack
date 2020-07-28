@@ -18,12 +18,14 @@ export default class NumInput extends React.Component {
     }
 
     onBlur(e) {
-        this.onChange(e, this.unformat(this.state.value));
+        console.log(this.props.value)
+        this.props.onChange(e, this.unformat(this.state.value));
     }
 
     onChange(e) {
         console.log(e)
         if (e.target.value.match(/^\d*$/)) {
+            console.log(this.state.value)
             this.setState({
                 value: e.target.value
             });

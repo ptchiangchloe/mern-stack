@@ -5,7 +5,7 @@ export default class DateInput extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: (props.value === '')? "" : this.editFormat(props.value),
+            value: '',
             focused: false, 
             valid: true
         }
@@ -33,7 +33,7 @@ export default class DateInput extends React.Component {
             this.props.onValidityChange(e, valid);
         }
         this.setState({focused: false, valid: valid})
-        if(valid) this.props.onChange(e, value);
+        if(valid) this.props.onParentChange(e, value);
     }
 
     onChange(e) {
@@ -46,7 +46,11 @@ export default class DateInput extends React.Component {
 
     displayFormat(date) {
         if(date === '') return '';
-        return (date != null) ? date.toDateString() : '';
+        if(date != null) {
+            return date.toUTCString()
+        } else {
+            return '';
+        }
     }
 
     editFormat(date) {

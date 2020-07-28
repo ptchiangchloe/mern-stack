@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import 'whatwg-fetch';
 import debug from 'debug';
 import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 import IssueAdd from './IssueAdd';
 import  IssueFilter  from './IssueFilter';
@@ -165,9 +166,9 @@ const IssueRow = ({ issue, deleteIssue }) => {
             <td>{issue.owner}</td>
             <td>{issue.created.toDateString()}</td>
             <td>{issue.effort}</td>
-            <td>{issue.completionDate ? issue.completionDate.toDateString() : ''}</td>
+            <td>{issue.completionDate ? issue.completionDate.toISOString().substr(0, 10) : ''}</td>
             <td>{issue.title}</td>
-            <td><button onClick={onDeleteClick}>Delete</button></td>
+            <td><Button size="sm" onClick={onDeleteClick}><span className="glyphicon glyphicon-trash" aria-hidden="true"></span></Button></td>
         </tr>
     );
 }

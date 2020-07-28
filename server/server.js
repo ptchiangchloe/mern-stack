@@ -126,9 +126,14 @@ app.put('/api/issues/:id', (req, res) => {
         return;
     }
 
-    db.collection('issues').update({_id: issueId}, Issue.convertIssue(issue)).then(() => {
+    console.log(issue)
+
+    db.collection('issues').updateOne({_id: issueId}, {
+        $set: Issue.convertIssue(issue)
+    }).then(() => {
         db.collection('issues').find({ _id: issueId }).limit(1).next()
         .then(savedIssue => {
+            // console.log(savedIssue)
             res.json(savedIssue);
         })
         .catch(error => {

@@ -50,7 +50,6 @@ export default class IssueEdit extends React.Component { // eslint-disable-line
         const issue = Object.assign({}, this.state.issue);
         const value = (convertedValue !== undefined) ? convertedValue : e.target.value;
         issue[e.target.name] = value;
-        console.log(this.state)
         this.setState({issue});
     }
 
@@ -138,8 +137,8 @@ export default class IssueEdit extends React.Component { // eslint-disable-line
                         onValidityChange={this.onValidityChange} 
                         name="completionDate" 
                         value={issue.completionDate} 
-                        onChange={this.onChange} 
-                        size={20}
+                        onParentChange={this.onChange} 
+                        size={40}
                     />
                     <br />
                     Title: 
