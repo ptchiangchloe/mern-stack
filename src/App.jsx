@@ -6,7 +6,6 @@ import {
     Redirect, Route, Switch,
 } from 'react-router-dom';
 
-
 import { withRouter } from 'react-router';
 
 import IssueList from './IssueList';
@@ -33,10 +32,12 @@ const RoutedApp = () => (
             </Switch>
         </Router>
         <div className="footer">
-            Full source code available at this <a href="https://github.com/vasnsr/pro-mern-stack">GitHub repository</a>
+            Full source code available at this
+            {' '}
+            <a href="https://github.com/vasnsr/pro-mern-stack">GitHub repository</a>
         </div>
     </div>
-)
+);
 
 debug.enable('app:*');
 

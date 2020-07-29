@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 
 class IssueFilter extends React.Component { // eslint-disable-line
     constructor(props) {
-        super()
+        super();
         this.props = props;
         this.state = {
             status: props.initFilter.status || '',
@@ -20,17 +20,17 @@ class IssueFilter extends React.Component { // eslint-disable-line
         this.clearFilter = this.clearFilter.bind(this);
     }
 
-    componentWillReceiveProps(newProps) {
-        this.setState({
+    static getDerivedStateFromProps(newProps) {
+        return {
             status: newProps.initFilter.status || '',
             effort_gte: newProps.initFilter.effort_gte || '',
             effort_lte: newProps.initFilter.effort_lte || '',
             changed: false,
-        });
+        };
     }
 
     onChangeStatus(e) {
-        this.setState({status: e.target.value, changed: true});
+        this.setState({ status: e.target.value, changed: true });
     }
 
     onChangeEffortGte(e) {
@@ -38,7 +38,7 @@ class IssueFilter extends React.Component { // eslint-disable-line
         if (effortString.match(/^\d*$/)) {
             this.setState({
                 effort_gte: e.target.value,
-                changed: true
+                changed: true,
             });
         }
     }
@@ -48,7 +48,7 @@ class IssueFilter extends React.Component { // eslint-disable-line
         if (effortString.match(/^\d*$/)) {
             this.setState({
                 effort_lte: e.target.value,
-                changed: true
+                changed: true,
             });
         }
     }
@@ -71,13 +71,13 @@ class IssueFilter extends React.Component { // eslint-disable-line
             effort_gte: '',
             effort_lte: '',
             changed: false,
-        })
+        });
     }
-    
+
     render() {
         return (
             <div>
-                Status: 
+                Status:
                 <select value={this.state.status} onChange={this.onChangeStatus}>
                     <option value="">(Any)</option>
                     <option value="New">New</option>
@@ -98,4 +98,4 @@ class IssueFilter extends React.Component { // eslint-disable-line
     }
 }
 
-export default withRouter(IssueFilter); 
+export default withRouter(IssueFilter);

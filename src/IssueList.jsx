@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 import IssueAdd from './IssueAdd';
-import  IssueFilter  from './IssueFilter';
-
+import IssueFilter from './IssueFilter';
 
 const log = debug('app:issueList');
 
@@ -37,8 +36,8 @@ export default class IssueList extends React.Component {
 
     setFilter(query) {
         this.props.history.push({
-            pathname: this.props.location.pathname, 
-            search: "?" + new URLSearchParams(query)
+            pathname: this.props.location.pathname,
+            search: `?${new URLSearchParams(query)}`,
         });
     }
 
@@ -95,12 +94,12 @@ export default class IssueList extends React.Component {
 
     deleteIssue(id) {
         fetch(`/api/issues/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
         })
-        .then(response => {
-            if (!response.ok) alert('Failed to delete issue');
-            else this.loadData();
-        })
+            .then((response) => {
+                if (!response.ok) alert('Failed to delete issue');
+                else this.loadData();
+            });
     }
 
     render() {
@@ -108,10 +107,12 @@ export default class IssueList extends React.Component {
 
         return (
             <div>
-                <IssueFilter  setFilter={this.setFilter}
-                    initFilter={this.props.location.search}/>
+                <IssueFilter
+                    setFilter={this.setFilter}
+                    initFilter={this.props.location.search}
+                />
                 <hr />
-                <IssueTable 
+                <IssueTable
                     issues={issues}
                     deleteIssue={this.deleteIssue}
                 />
@@ -139,12 +140,12 @@ const IssueTable = ({ issues, deleteIssue }) => (
                 <th>Effort</th>
                 <th>Completion Date</th>
                 <th>Title</th>
-                <th></th>
+                <th />
             </tr>
         </thead>
         <tbody>
             {
-                issues.map((issue) => <IssueRow key={issue._id} issue={issue} deleteIssue={deleteIssue}/>)
+                issues.map((issue) => <IssueRow key={issue._id} issue={issue} deleteIssue={deleteIssue} />)
             }
         </tbody>
     </table>
@@ -168,10 +169,10 @@ const IssueRow = ({ issue, deleteIssue }) => {
             <td>{issue.effort}</td>
             <td>{issue.completionDate ? issue.completionDate.toISOString().substr(0, 10) : ''}</td>
             <td>{issue.title}</td>
-            <td><Button size="sm" onClick={onDeleteClick}><span className="glyphicon glyphicon-trash" aria-hidden="true"></span></Button></td>
+            <td><Button size="sm" onClick={onDeleteClick}><span className="glyphicon glyphicon-trash" aria-hidden="true" /></Button></td>
         </tr>
     );
-}
+};
 
 IssueRow.propTypes = {
     issue: PropTypes.shape({

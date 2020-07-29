@@ -6,18 +6,19 @@ export default class DateInput extends React.Component {
         super(props);
         this.state = {
             value: '',
-            focused: false, 
-            valid: true
-        }
+            focused: false,
+            valid: true,
+        };
         this.onFocus = this.onFocus.bind(this);
         this.onBlur = this.onBlur.bind(this);
         this.onChange = this.onChange.bind(this);
     }
 
-    componentWillReceiveProps(newProps) {
-        if (newProps.value !== this.props.value) {
+    UNSAFE_componentWillReceiveProps(newProps) {
+        const { value } = this.props;
+        if (newProps.value !== value) {
             this.setState({
-                value: this.editFormat(newProps.value)
+                value: this.editFormat(newProps.value),
             });
         }
     }
@@ -32,25 +33,24 @@ export default class DateInput extends React.Component {
         if (valid !== this.state.valid && this.props.onValidityChange) {
             this.props.onValidityChange(e, valid);
         }
-        this.setState({focused: false, valid: valid})
-        if(valid) this.props.onParentChange(e, value);
+        this.setState({ focused: false, valid });
+        if (valid) this.props.onChange(e, value);
     }
 
     onChange(e) {
         if (e.target.value.match(/^[\d-]*$/)) {
             this.setState({
-                value: e.target.value
-            })
+                value: e.target.value,
+            });
         }
     }
 
     displayFormat(date) {
-        if(date === '') return '';
-        if(date != null) {
-            return date.toUTCString()
-        } else {
-            return '';
+        if (date === '') return '';
+        if (date != null) {
+            return date.toUTCString().substr(0, 17);
         }
+        return '';
     }
 
     editFormat(date) {
@@ -66,24 +66,28 @@ export default class DateInput extends React.Component {
         const className = (!this.state.valid && !this.state.focused) ? 'invalid' : null;
         const value = (this.state.focused || !this.state.valid) ? this.state.value : this.displayFormat(this.props.value);
         return (
-            <input type="text" size={this.props.size} name={this.props.name} className={className} value={value}
-                placeholder={this.state.focused ? 'yyyy-mm-dd' : null} 
+            <input
+                type="text"
+                size={this.props.size}
+                name={this.props.name}
+                className={className}
+                value={value}
+                placeholder={this.state.focused ? 'yyyy-mm-dd' : null}
                 onFocus={this.onFocus}
                 onBlur={this.onBlur}
                 onChange={this.onChange}
             />
-        )
+        );
     }
 }
 
 DateInput.propTypes = {
-    value: PropTypes.object,
     size: PropTypes.number,
     onChange: PropTypes.func.isRequired,
     onValidityChange: PropTypes.func,
-    name: PropTypes.string.isRequired
-}
+    name: PropTypes.string.isRequired,
+};
 
 DateInput.defaultProps = {
     size: 40,
-}
+};

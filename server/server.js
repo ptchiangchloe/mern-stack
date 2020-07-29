@@ -40,8 +40,6 @@ MongoClient.connect('mongodb://localhost', { useUnifiedTopology: true }).then((c
 //     app.use(webpackHotMiddleware(bundler, { log: console.log }));
 // }
 
-
-
 app.get('/api/issues', (req, res) => {
     const filter = {};
     console.log(req.query);
@@ -89,30 +87,30 @@ app.get('/api/issues/:id', (req, res) => {
     try {
         issueId = new ObjectId(req.params.id);
     } catch (error) {
-        res.status(422).json({message: `Invalid issue ID format: ${error}`});
+        res.status(422).json({ message: `Invalid issue ID format: ${error}` });
         return;
     }
 
-    db.collection('issues').find({_id: issueId}).limit(1)
-    .next()
-    .then(issue => {
-        if(!issue) res.status(404).json({message: `No such issue: ${issueId}`});
-        else res.json(issue);
-    })
-    .catch(error => {
-        console.log(error);
-        res.status(500).json({ message: `Internal Server Error: ${error}`});
-    });
+    db.collection('issues').find({ _id: issueId }).limit(1)
+        .next()
+        .then((issue) => {
+            if (!issue) res.status(404).json({ message: `No such issue: ${issueId}` });
+            else res.json(issue);
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json({ message: `Internal Server Error: ${error}` });
+        });
 });
 
 app.put('/api/issues/:id', (req, res) => {
     let issueId;
-    console.log(req.params)
+    console.log(req.params);
     try {
         issueId = new ObjectId(req.params.id);
     } catch (error) {
         res.status(422).json({
-            message: `Invalid issue ID format: ${error}`
+            message: `Invalid issue ID format: ${error}`,
         });
         return;
     }
@@ -121,29 +119,29 @@ app.put('/api/issues/:id', (req, res) => {
     delete issue._id;
 
     const err = Issue.validateIssue(issue);
-    if(err) {
-        res.status(422).json({message: `Invalid request: ${err}`});
+    if (err) {
+        res.status(422).json({ message: `Invalid request: ${err}` });
         return;
     }
 
-    console.log(issue)
+    console.log(issue);
 
-    db.collection('issues').updateOne({_id: issueId}, {
-        $set: Issue.convertIssue(issue)
+    db.collection('issues').updateOne({ _id: issueId }, {
+        $set: Issue.convertIssue(issue),
     }).then(() => {
         db.collection('issues').find({ _id: issueId }).limit(1).next()
-        .then(savedIssue => {
+            .then((savedIssue) => {
             // console.log(savedIssue)
-            res.json(savedIssue);
-        })
-        .catch(error => {
-            console.log(error);
-            res.status(500).json({
-                message: `Internal Server Error: ${error}`
+                res.json(savedIssue);
+            })
+            .catch((error) => {
+                console.log(error);
+                res.status(500).json({
+                    message: `Internal Server Error: ${error}`,
+                });
             });
-        });
     });
-})
+});
 
 app.delete('/api/issues/:id', (req, res) => {
     let issueId;
@@ -151,27 +149,27 @@ app.delete('/api/issues/:id', (req, res) => {
         issueId = new ObjectId(req.params.id);
     } catch (error) {
         res.status(422).json({
-            message: `Invalid request: ${error}`
-        })
+            message: `Invalid request: ${error}`,
+        });
         return;
     }
 
-    db.collection('issues').deleteOne({_id: issueId})
-    .then((deleteResult) => {
-        if(deleteResult.result.n === 1) res.json({
-            status: 'OK'
+    db.collection('issues').deleteOne({ _id: issueId })
+        .then((deleteResult) => {
+            if (deleteResult.result.n === 1) {
+                res.json({
+                    status: 'OK',
+                });
+            } else res.json({ status: 'Warning: object not found' });
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json({
+                message: `Internal Server Error: ${error}`,
+            });
         });
-        else res.json({status: 'Warning: object not found'});
-    })
-    .catch(error => {
-        console.log(error);
-        res.status(500).json({
-            message: `Internal Server Error: ${error}`
-        });
-    });
 });
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve('static/index.html'));
 });
-
