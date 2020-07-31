@@ -43,6 +43,7 @@ debug.enable('app:*');
 
 ReactDOM.render(<RoutedApp />, contentNode); // Render the component inside the contentNode
 
-if (module.hot) {
-    module.hot.accept();
+if ((module as any).hot) {
+    (module as any).hot.accept();
 }
+

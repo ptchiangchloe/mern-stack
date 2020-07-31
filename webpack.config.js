@@ -12,9 +12,7 @@ module.exports = {
         historyApiFallback: true,
     },
     devtool: 'source-map',
-    entry: {
-        app: ['./src/App.jsx'],
-    },
+    entry: './src/App.tsx',
     output: {
         path: path.join(__dirname, '/static'),
         filename: 'app.bundle.js',
@@ -32,6 +30,15 @@ module.exports = {
                     // in webpack. babel-loader 8^ should be match other babel modules 7^
                 },
             },
+            {
+                test: /\.tsx?$/,
+                use:  'ts-loader',
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.tsx?$/, 
+                loader: 'awesome-typescript-loader'
+            }
         ],
     },
     // The config below is for reducing duplicated modules being requested over and over again
@@ -49,6 +56,6 @@ module.exports = {
         },
     },
     resolve: {
-        extensions: ['.js', '.jsx'],
+        extensions: ['.tsx', '.ts','.js', '.jsx'],
     },
 };

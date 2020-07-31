@@ -1,9 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-export default class IssueAdd extends React.Component {
-    constructor() {
-        super();
+type MyProps = {
+    createIssue: any,
+}
+
+type MyState = {
+    
+}
+
+export default class IssueAdd extends React.Component<MyProps, MyState> {
+    constructor(props: any) {
+        super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -11,7 +18,9 @@ export default class IssueAdd extends React.Component {
         return false;
     }
 
-    handleSubmit(e) {
+    handleSubmit(e: {
+        preventDefault: any,
+    }) {
         const { createIssue } = this.props;
         const form = document.forms.issueAdd;
         e.preventDefault();
@@ -27,7 +36,7 @@ export default class IssueAdd extends React.Component {
     }
 
     render() {
-        console.log('IssueAdd component rendering');
+
         return (
             <div>
                 <form name="issueAdd" onSubmit={this.handleSubmit}>
@@ -40,6 +49,3 @@ export default class IssueAdd extends React.Component {
     }
 }
 
-IssueAdd.propTypes = {
-    createIssue: PropTypes.func.isRequired,
-};

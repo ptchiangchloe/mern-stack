@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import 'whatwg-fetch';
 import debug from 'debug';
 import { Link } from 'react-router-dom';
@@ -10,8 +9,17 @@ import IssueFilter from './IssueFilter';
 
 const log = debug('app:issueList');
 
-export default class IssueList extends React.Component {
-    constructor(props) {
+type MyProps = {
+    location: any,
+    history: any,
+}
+
+type MyState = {
+    issues: Array<object>,
+}
+
+export default class IssueList extends React.Component<MyProps, MyState> {
+    constructor(props: any) {
         super(props);
         this.state = { issues: [] };
         this.createIssue = this.createIssue.bind(this);
@@ -21,10 +29,9 @@ export default class IssueList extends React.Component {
 
     componentDidMount() {
         this.loadData();
-        // this.testThis = this.testThis.bind(this)
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps: any) {
         const { location } = this.props;
         const oldQuery = prevProps.location.search;
         const newQuery = location.search;
@@ -34,7 +41,7 @@ export default class IssueList extends React.Component {
         this.loadData();
     }
 
-    setFilter(query) {
+    setFilter(query: string) {
         this.props.history.push({
             pathname: this.props.location.pathname,
             search: `?${new URLSearchParams(query)}`,
@@ -46,7 +53,10 @@ export default class IssueList extends React.Component {
             if (response.ok) {
                 response.json().then((data) => {
                     log(`Total count of records: ${data._metadata.total_count}`);
-                    data.records.forEach((issue) => {
+                    data.records.forEach((issue: {
+                        created: any,
+                        completionDate: any,
+                    }) => {
                         issue.created = new Date(issue.created);
                         if (issue.completionDate) {
                             issue.completionDate = new Date(issue.completionDate);
@@ -64,7 +74,7 @@ export default class IssueList extends React.Component {
         });
     }
 
-    createIssue(newIssue) {
+    createIssue(newIssue: any) {
         // console.log(newIssue)
         const { issues } = this.state;
         fetch('/api/issues', {
@@ -92,7 +102,7 @@ export default class IssueList extends React.Component {
         }).catch((err) => { alert(`Failed in sending data to server: ${err.message}`); });
     }
 
-    deleteIssue(id) {
+    deleteIssue(id: string) {
         fetch(`/api/issues/${id}`, {
             method: 'DELETE',
         })
@@ -120,7 +130,6 @@ export default class IssueList extends React.Component {
                 <IssueAdd createIssue={this.createIssue} />
                 <button
                     type="button"
-                    onClick={this.testThis}
                 >
                     Click Me
                 </button>
@@ -129,7 +138,7 @@ export default class IssueList extends React.Component {
     }
 }
 
-const IssueTable = ({ issues, deleteIssue }) => (
+const IssueTable = ({ issues, deleteIssue } : {issues: any, deleteIssue: any}) => (
     <table style={{ borderTop: '3px solid red', padding: '16px' }}>
         <thead>
             <tr>
@@ -145,13 +154,13 @@ const IssueTable = ({ issues, deleteIssue }) => (
         </thead>
         <tbody>
             {
-                issues.map((issue) => <IssueRow key={issue._id} issue={issue} deleteIssue={deleteIssue} />)
+                issues.map((issue: {_id: string}) => <IssueRow key={issue._id} issue={issue} deleteIssue={deleteIssue} />)
             }
         </tbody>
     </table>
 );
 
-const IssueRow = ({ issue, deleteIssue }) => {
+const IssueRow = ({ issue, deleteIssue } : {issue: any, deleteIssue: any}) => {
     function onDeleteClick() {
         deleteIssue(issue._id);
     }
@@ -174,25 +183,3 @@ const IssueRow = ({ issue, deleteIssue }) => {
     );
 };
 
-IssueRow.propTypes = {
-    issue: PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
-        owner: PropTypes.string.isRequired,
-        created: PropTypes.instanceOf(Date).isRequired,
-        effort: PropTypes.number,
-        completionDate: PropTypes.instanceOf(Date),
-        title: PropTypes.string,
-    }).isRequired,
-};
-
-IssueTable.propTypes = {
-    issues: PropTypes.arrayOf(PropTypes.object).isRequired,
-    deleteIssue: PropTypes.func.isRequired,
-};
-
-IssueList.propTypes = {
-    location: PropTypes.shape({
-        search: PropTypes.string.isRequired,
-    }),
-};
