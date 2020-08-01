@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import 'whatwg-fetch';
 import debug from 'debug';
 import { Link } from 'react-router-dom';
@@ -9,12 +9,12 @@ import IssueFilter from './IssueFilter';
 
 const log = debug('app:issueList');
 
-type MyProps = {
+interface MyProps {
     location: any,
     history: any,
 }
 
-type MyState = {
+interface MyState {
     issues: Array<object>,
 }
 
@@ -138,7 +138,12 @@ export default class IssueList extends React.Component<MyProps, MyState> {
     }
 }
 
-const IssueTable = ({ issues, deleteIssue } : {issues: any, deleteIssue: any}) => (
+type TableProps = {
+    issues: any,
+    deleteIssue: any
+}
+
+const IssueTable: React.FC<TableProps> = ({ issues, deleteIssue }) => (
     <table style={{ borderTop: '3px solid red', padding: '16px' }}>
         <thead>
             <tr>
@@ -160,7 +165,12 @@ const IssueTable = ({ issues, deleteIssue } : {issues: any, deleteIssue: any}) =
     </table>
 );
 
-const IssueRow = ({ issue, deleteIssue } : {issue: any, deleteIssue: any}) => {
+type RowProps = {
+    issue: any,
+    deleteIssue: any
+}
+
+const IssueRow: React.FC<RowProps> = ({ issue, deleteIssue }) => {
     function onDeleteClick() {
         deleteIssue(issue._id);
     }

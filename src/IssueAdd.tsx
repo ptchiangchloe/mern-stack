@@ -1,14 +1,10 @@
 import React from 'react';
 
-type MyProps = {
+type Props = {
     createIssue: any,
 }
 
-type MyState = {
-    
-}
-
-export default class IssueAdd extends React.Component<MyProps, MyState> {
+export default class IssueAdd extends React.Component<Props> {
     constructor(props: any) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,11 +14,11 @@ export default class IssueAdd extends React.Component<MyProps, MyState> {
         return false;
     }
 
-    handleSubmit(e: {
-        preventDefault: any,
-    }) {
+    handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         const { createIssue } = this.props;
-        const form = document.forms.issueAdd;
+        const forms: any = document.forms
+        const form = forms.issueAdding;
+
         e.preventDefault();
         createIssue({
             owner: form.owner.value,
@@ -36,10 +32,9 @@ export default class IssueAdd extends React.Component<MyProps, MyState> {
     }
 
     render() {
-
         return (
             <div>
-                <form name="issueAdd" onSubmit={this.handleSubmit}>
+                <form name="issueAdding" onSubmit={this.handleSubmit}>
                     <input type="text" name="owner" placeholder="Owner" />
                     <input type="text" name="title" placeholder="Title" />
                     <button type="submit">Add New Task</button>

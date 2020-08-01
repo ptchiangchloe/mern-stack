@@ -1,12 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes, { shape } from 'prop-types';
 import NumInput from './NumInput';
 import DateInput from './DateInput';
 
-export default class IssueEdit extends React.Component { // eslint-disable-line
-    constructor() {
-        super();
+interface MyProps {
+    match: any
+}
+
+interface State {
+    invalidFields: any,
+}
+
+export default class IssueEdit extends React.Component<MyProps, State> { // eslint-disable-line
+    constructor(props) {
+        super(props);
         this.state = {
             issue: {
                 _id: '',
@@ -156,10 +163,3 @@ export default class IssueEdit extends React.Component { // eslint-disable-line
     }
 }
 
-IssueEdit.propTypes = {
-    match: shape({
-        params: shape({
-            id: PropTypes.string.isRequired,
-        }),
-    }).isRequired,
-};
