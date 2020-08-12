@@ -1,9 +1,9 @@
 import * as React from 'react';
 import 'whatwg-fetch';
 import debug from 'debug';
-import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 
+import IssueTable from './IssueTable';
 import IssueAdd from './IssueAdd';
 import IssueFilter from './IssueFilter';
 
@@ -21,7 +21,12 @@ interface MyState {
 export default class IssueList extends React.Component<MyProps, MyState> {
     constructor(props: any) {
         super(props);
-        this.state = { issues: [] };
+        console.log(props)
+        this.state = { 
+            issues: [],
+            name: props.match.path.substring(1)
+        };
+        console.log(this.state.name)
         this.createIssue = this.createIssue.bind(this);
         this.setFilter = this.setFilter.bind(this);
         this.deleteIssue = this.deleteIssue.bind(this);
@@ -116,7 +121,7 @@ export default class IssueList extends React.Component<MyProps, MyState> {
         const { issues } = this.state;
 
         return (
-            <div>
+            <Container>
                 <IssueFilter
                     setFilter={this.setFilter}
                     initFilter={this.props.location.search}
@@ -128,68 +133,13 @@ export default class IssueList extends React.Component<MyProps, MyState> {
                 />
                 <hr />
                 <IssueAdd createIssue={this.createIssue} />
-                <button
+                <Button
                     type="button"
                 >
                     Click Me
-                </button>
-            </div>
+                </Button>
+            </Container>
         );
     }
 }
-
-type TableProps = {
-    issues: any,
-    deleteIssue: any
-}
-
-const IssueTable: React.FC<TableProps> = ({ issues, deleteIssue }) => (
-    <table style={{ borderTop: '3px solid red', padding: '16px' }}>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Status</th>
-                <th>Owner</th>
-                <th>Created</th>
-                <th>Effort</th>
-                <th>Completion Date</th>
-                <th>Title</th>
-                <th />
-            </tr>
-        </thead>
-        <tbody>
-            {
-                issues.map((issue: {_id: string}) => <IssueRow key={issue._id} issue={issue} deleteIssue={deleteIssue} />)
-            }
-        </tbody>
-    </table>
-);
-
-type RowProps = {
-    issue: any,
-    deleteIssue: any
-}
-
-const IssueRow: React.FC<RowProps> = ({ issue, deleteIssue }) => {
-    function onDeleteClick() {
-        deleteIssue(issue._id);
-    }
-
-    return (
-        <tr>
-            <td>
-                <Link to={`/issues/${issue._id}`}>
-                    {issue._id.substr(-4)}
-                </Link>
-            </td>
-            <td>{issue.status}</td>
-            <td>{issue.owner}</td>
-            <td>{issue.created.toDateString()}</td>
-            <td>{issue.effort}</td>
-            <td>{issue.completionDate ? issue.completionDate.toISOString().substr(0, 10) : ''}</td>
-            <td>{issue.title}</td>
-            <td><Button size="sm" onClick={onDeleteClick}><span className="glyphicon glyphicon-trash" aria-hidden="true" /></Button></td>
-        </tr>
-    );
-};
 

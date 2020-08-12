@@ -9,6 +9,15 @@ interface MyProps {
 
 interface State {
     invalidFields: any,
+    issue: {
+        _id: string,
+        title: string,
+        status: string,
+        owner: string,
+        effort: number | null,
+        completionDate: any,
+        created: any,
+    }
 }
 
 export default class IssueEdit extends React.Component<MyProps, State> { // eslint-disable-line
@@ -41,20 +50,25 @@ export default class IssueEdit extends React.Component<MyProps, State> { // esli
         }
     }
 
-    onValidityChange(event, valid) {
+    onValidityChange(event: React.FormEvent, valid: boolean) {
         const invalidFields = { ...this.state.invalidFields };
+        const target = event.target as HTMLInputElement;
         if (!valid) {
-            invalidFields[event.target.name] = true;
+            invalidFields[target.name] = true;
         } else {
-            delete invalidFields[event.target.name];
+            delete invalidFields[target.name];
         }
         this.setState({ invalidFields });
     }
 
-    onChange(e, convertedValue) {
+    onChange(
+        e: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>, 
+        convertedValue?: any
+    ) {
         const issue = { ...this.state.issue };
-        const value = (convertedValue !== undefined) ? convertedValue : e.target.value;
-        issue[e.target.name] = value;
+        const target = e.target as HTMLInputElement;
+        const value = (convertedValue !== undefined) ? convertedValue :target.value;
+        issue[target.name] = value;
         this.setState({ issue });
     }
 
@@ -74,11 +88,13 @@ export default class IssueEdit extends React.Component<MyProps, State> { // esli
                 }
             })
             .catch((err) => {
-                alert(`Error in fetching data from server: ${error.message}`);
+                alert(`Error in fetching data from server: ${err.message}`);
             });
     }
 
-    onSubmit(e) {
+    onSubmit = async (
+        e: React.FormEvent<HTMLFormElement>
+    ): Promise<void> => {
         e.preventDefault();
 
         if (Object.keys(this.state.invalidFields).length !== 0) {
@@ -137,7 +153,7 @@ export default class IssueEdit extends React.Component<MyProps, State> { // esli
                     </select>
                     <br />
                     Owner:
-                    <input name="owner" value={issue.owner} onChange={this.onChange} />
+                    <input type="text" name="owner" value={issue.owner} onChange={this.onChange} />
                     <br />
                     Effort:
                     <NumInput size={5} name="effort" value={issue.effort} onChange={this.onChange} />
