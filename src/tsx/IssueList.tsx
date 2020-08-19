@@ -23,10 +23,9 @@ export default class IssueList extends React.Component<MyProps, MyState> {
         super(props);
         console.log(props)
         this.state = { 
-            issues: [],
-            name: props.match.path.substring(1)
+            issues: []
         };
-        console.log(this.state.name)
+
         this.createIssue = this.createIssue.bind(this);
         this.setFilter = this.setFilter.bind(this);
         this.deleteIssue = this.deleteIssue.bind(this);

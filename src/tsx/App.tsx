@@ -17,7 +17,7 @@ const NoMatch = () => <p>Page Not Found</p>;
 const RoutedApp = () => (
     <div>
         <div className="header">
-            <h1>Issue Tracker</h1>
+            <h1>My Closet App</h1>
         </div>
         <Router>
             <Switch>
@@ -31,11 +31,6 @@ const RoutedApp = () => (
                 <Route path="*" component={NoMatch} />
             </Switch>
         </Router>
-        <div className="footer">
-            Full source code available at this
-            {' '}
-            <a href="https://github.com/vasnsr/pro-mern-stack">GitHub repository</a>
-        </div>
     </div>
 );
 

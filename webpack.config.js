@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
+    mode: 'development',
     devServer: {
         port: 8000,
         contentBase: 'static',
@@ -12,7 +13,7 @@ module.exports = {
         historyApiFallback: true,
     },
     devtool: 'source-map',
-    entry: './src/App.tsx',
+    entry: './src/tsx/App.tsx',
     output: {
         path: path.join(__dirname, '/static'),
         filename: 'app.bundle.js',
