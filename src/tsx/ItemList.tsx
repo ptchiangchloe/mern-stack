@@ -3,7 +3,7 @@ import 'whatwg-fetch';
 import debug from 'debug';
 import { Button, Container } from 'react-bootstrap';
 
-import IssueTable from './IssueTable';
+import ItemTable from './ItemTable';
 import IssueAdd from './IssueAdd';
 import IssueFilter from './IssueFilter';
 
@@ -15,15 +15,15 @@ interface MyProps {
 }
 
 interface MyState {
-    issues: Array<object>,
+    items: Array<object>,
 }
 
-export default class IssueList extends React.Component<MyProps, MyState> {
+export default class ItemList extends React.Component<MyProps, MyState> {
     constructor(props: any) {
         super(props);
         console.log(props)
         this.state = { 
-            issues: []
+            items: []
         };
 
         this.createIssue = this.createIssue.bind(this);
@@ -53,20 +53,14 @@ export default class IssueList extends React.Component<MyProps, MyState> {
     }
 
     loadData() {
-        fetch(`/api/issues${this.props.location.search}`).then((response) => {
+        fetch(`/api/items${this.props.location.search}`).then((response) => {
             if (response.ok) {
                 response.json().then((data) => {
                     log(`Total count of records: ${data._metadata.total_count}`);
-                    data.records.forEach((issue: {
-                        created: any,
-                        completionDate: any,
-                    }) => {
-                        issue.created = new Date(issue.created);
-                        if (issue.completionDate) {
-                            issue.completionDate = new Date(issue.completionDate);
-                        }
+                    data.records.forEach((item) => {
+                        
                     });
-                    this.setState({ issues: data.records });
+                    this.setState({ items: data.records });
                 });
             } else {
                 response.json().then((error) => {
@@ -80,7 +74,7 @@ export default class IssueList extends React.Component<MyProps, MyState> {
 
     createIssue(newIssue: any) {
         // console.log(newIssue)
-        const { issues } = this.state;
+        const { items } = this.state;
         fetch('/api/issues', {
             method: 'POST',
             headers: {
@@ -95,8 +89,8 @@ export default class IssueList extends React.Component<MyProps, MyState> {
                     if (updatedIssue.completionDate) {
                         updatedIssue.completionDate = new Date(updatedIssue.completionDate);
                     }
-                    const newIssues = issues.concat(updatedIssue);
-                    this.setState({ issues: newIssues });
+                    const newIssues = items.concat(updatedIssue);
+                    this.setState({ items: newIssues });
                 });
             } else {
                 response.json().then((error) => {
@@ -117,7 +111,7 @@ export default class IssueList extends React.Component<MyProps, MyState> {
     }
 
     render() {
-        const { issues } = this.state;
+        const { items } = this.state;
 
         return (
             <Container>
@@ -126,9 +120,8 @@ export default class IssueList extends React.Component<MyProps, MyState> {
                     initFilter={this.props.location.search}
                 />
                 <hr />
-                <IssueTable
-                    issues={issues}
-                    deleteIssue={this.deleteIssue}
+                <ItemTable
+                    items={items}
                 />
                 <hr />
                 <IssueAdd createIssue={this.createIssue} />

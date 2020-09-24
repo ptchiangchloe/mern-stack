@@ -10,7 +10,7 @@ import path from 'path';
 // import webpackDevMiddleware from 'webpack-dev-middleware';
 // import webpackHotMiddleware from 'webpack-hot-middleware';
 
-import Issue from './issue';
+import Item from './item';
 // import config from '../webpack.config';
 
 SourceMapSupport.install();
@@ -25,7 +25,7 @@ app.use('/static', express.static('public'));
 let db;
 
 MongoClient.connect('mongodb://localhost', { useUnifiedTopology: true }).then((connection) => {
-    db = connection.db('issuetracker');
+    db = connection.db('closet');
     app.listen(3000, () => {
         console.log('App started on port 3000');
     });
@@ -40,46 +40,48 @@ MongoClient.connect('mongodb://localhost', { useUnifiedTopology: true }).then((c
 //     app.use(webpackHotMiddleware(bundler, { log: console.log }));
 // }
 
-app.get('/api/issues', (req, res) => {
+app.get('/api/items', (req, res) => {
     const filter = {};
     console.log(req.query);
-    if (req.query.status) filter.status = req.query.status;
-    if (req.query.effort_lte || req.query.effor_gte) filter.effort = {};
-    if (req.query.effort_lte) filter.effort.$lte = parseInt(req.query.effort_lte, 10);
-    if (req.query.effor_gte) filter.effort.$gte = parseInt(req.query.effort_gte, 10);
-    db.collection('issues').find(filter).toArray().then((issues) => {
-        const metadata = { total_count: issues.length };
-        res.json({ _metadata: metadata, records: issues });
+    // if (req.query.status) filter.status = req.query.status;
+    // if (req.query.effort_lte || req.query.effor_gte) filter.effort = {};
+    // if (req.query.effort_lte) filter.effort.$lte = parseInt(req.query.effort_lte, 10);
+    // if (req.query.effor_gte) filter.effort.$gte = parseInt(req.query.effort_gte, 10);
+    db.collection('items').find(filter).toArray().then((items) => {
+        const metadata = { total_count: items.length };
+        res.json({ _metadata: metadata, records: items });
     })
-        .catch((error) => {
-            console.log(error);
-            res.status(500).json({ message: `Internal Server Error: ${error}` });
-        });
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({ message: `Internal Server Error: ${error}` });
+    });
 });
 
-app.post('/api/issues', (req, res) => {
-    const newIssue = req.body;
-    newIssue.created = new Date();
-    if (!newIssue.status) {
-        newIssue.status = 'New';
+app.post('/api/item', (req, res) => {
+    const newItem = req.body;
+    // newIssue.created = new Date();
+    if(!newItem.purchaseDate) {
+        newItem.purchaseDate = new Date()
     }
 
-    const err = Issue.validateIssue(newIssue);
+    // we should validate price input in the client-side
+    const err = Item.validateItem(newItem);
 
     if (err) {
-        res.status(422).json({ message: `Invalid request: ${err}` });
+        res.status(422).json({ message: `Invalid request/ Unprocessable Entity: ${err}` });
         return;
     }
 
-    db.collection('issues').insertOne(Issue.cleanupIssue(newIssue))
-        .then((result) => db.collection('issues').find({ _id: result.insertedId }).limit(1).next())
-        .then((theNewIssue) => {
-            res.json(theNewIssue);
-        })
-        .catch((error) => {
-            console.log(error);
-            res.status(500).json({ message: `Internal Server Error: ${error}` });
-        });
+    console.log(newItem)
+    db.collection('items').insertOne(Item.cleanupItem(newItem))
+    .then((result) => db.collection('items').find({ _id: result.insertedId }).limit(1).next())
+    .then((theNewItem) => {
+        res.json(theNewItem);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({ message: `Internal Server Error: ${error}` });
+    });
 });
 
 app.get('/api/issues/:id', (req, res) => {
@@ -155,19 +157,19 @@ app.delete('/api/issues/:id', (req, res) => {
     }
 
     db.collection('issues').deleteOne({ _id: issueId })
-        .then((deleteResult) => {
-            if (deleteResult.result.n === 1) {
-                res.json({
-                    status: 'OK',
-                });
-            } else res.json({ status: 'Warning: object not found' });
-        })
-        .catch((error) => {
-            console.log(error);
-            res.status(500).json({
-                message: `Internal Server Error: ${error}`,
+    .then((deleteResult) => {
+        if (deleteResult.result.n === 1) {
+            res.json({
+                status: 'OK',
             });
+        } else res.json({ status: 'Warning: object not found' });
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({
+            message: `Internal Server Error: ${error}`,
         });
+    });
 });
 
 app.get('*', (req, res) => {

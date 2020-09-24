@@ -8,7 +8,7 @@ import {
 
 import { withRouter } from 'react-router';
 
-import IssueList from './IssueList';
+import ItemList from './ItemList';
 import IssueEdit from './IssueEdit';
 
 const contentNode = document.getElementById('contents');
@@ -26,7 +26,7 @@ const RoutedApp = () => (
                     path="/"
                     render={() => (<Redirect to={{ pathname: '/issues' }} />)}
                 />
-                <Route exact path="/issues" component={withRouter(IssueList)} />
+                <Route exact path="/issues" component={withRouter(ItemList)} />
                 <Route exact path="/issues/:id" component={IssueEdit} />
                 <Route path="*" component={NoMatch} />
             </Switch>
