@@ -6,31 +6,38 @@ My Closet is an online style management app that can help you organize your ward
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+
+
 ### Prerequisites
 
-What things you need to install the software and how to install them
+Node Requirement: 
 
 ```
-Give examples
+"node": ">=14.0.0"
 ```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+<!-- A step by step series of examples that tell you how to get a development env running
 
-Say what the step will be
+Say what the step will be -->
 
+Install all the node modules that this project requires. 
 ```
-Give the example
-```
-
-And repeat
-
-```
-until finished
+npm install 
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+start the development: 
+```
+npm run watch
+```
+
+start the express.js server and MongoDB:
+```
+npm run watch-server 
+```
+
+<!-- End with an example of getting some data out of the system or using it for a little demo -->
 
 ## Running the tests
 
@@ -58,9 +65,9 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+<!-- * [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
 * [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds -->
 
 ## Contributing
 
@@ -72,7 +79,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Hanyu Jiang** - *Initial work* - [My Closet](https://www.hansportfolio.net/)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
