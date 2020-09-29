@@ -23,13 +23,18 @@ app.use(bodyParser.json());
 app.use('/static', express.static('public'));
 
 let db;
-
-MongoClient.connect('mongodb://localhost', { useUnifiedTopology: true }).then((connection) => {
-    db = connection.db('closet');
-    app.listen(3000, () => {
-        console.log('App started on port 3000');
-    });
-}).catch((err) => console.log('ERROR:', err));
+const uri = "mongodb+srv://<username>:<password>@mern.9djbj.mongodb.net/closet?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  db = client.db("closet");
+  app.listen(3000, () => {
+      console.log("App started on port 3000");
+  })
+  console.log(db.databaseName)
+  // perform actions on the collection object
+  // When we leave the page we should close the client? 
+  // client.close();
+})
 
 // if (process.env.NODE_ENV !== 'production') {
 //     config.entry.app.push('webpack-hot-middleware/client', 'webpack/hot/only-dev-server');
