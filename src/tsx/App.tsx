@@ -10,15 +10,15 @@ import { withRouter } from 'react-router';
 
 import ItemList from './ItemList';
 import IssueEdit from './IssueEdit';
+import Navbar from './Navbar';
+import '../scss/App.scss';
 
 const contentNode = document.getElementById('contents');
 const NoMatch = () => <p>Page Not Found</p>;
 
 const RoutedApp = () => (
     <div>
-        <div className="header">
-            <h1>My Closet App</h1>
-        </div>
+        <Navbar />
         <Router>
             <Switch>
                 <Route

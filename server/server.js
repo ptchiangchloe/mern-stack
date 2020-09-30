@@ -5,10 +5,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient, ObjectId } from 'mongodb';
 import path from 'path';
-
-// import webpack from 'webpack';
-// import webpackDevMiddleware from 'webpack-dev-middleware';
-// import webpackHotMiddleware from 'webpack-hot-middleware';
+import { mongoAltas } from '../credential';
 
 import Item from './item';
 // import config from '../webpack.config';
@@ -22,15 +19,22 @@ app.use(bodyParser.json());
 
 app.use('/static', express.static('public'));
 
+const dbUser = mongoAltas.user
+const dbPassword = mongoAltas.password
+const dbName = mongoAltas.name
+const uri = `mongodb://${dbUser}:${dbPassword}@mern-shard-00-00.9djbj.mongodb.net:27017,mern-shard-00-01.9djbj.mongodb.net:27017,mern-shard-00-02.9djbj.mongodb.net:27017/${dbName}?ssl=true&replicaSet=mern-shard-0&authSource=admin&retryWrites=true&w=majority`
 let db;
-const uri = "mongodb+srv://<username>:<password>@mern.9djbj.mongodb.net/closet?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  db = client.db("closet");
-  app.listen(3000, () => {
-      console.log("App started on port 3000");
-  })
-  console.log(db.databaseName)
+
+MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+.then( client => {
+    db = client.db("closet");
+    app.listen(3000, () => {
+        console.log("App started on port 3000");
+    })
+    console.log(db.databaseName)
+})
+.catch(err => {
+    console.log(err)
   // perform actions on the collection object
   // When we leave the page we should close the client? 
   // client.close();

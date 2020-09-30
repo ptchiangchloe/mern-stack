@@ -35,6 +35,7 @@
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.0",
     "co": "^4.6.0",
+    "css-loader": "^4.3.0",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "mongodb": "^3.5.9",
@@ -45,6 +46,7 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "source-map-support": "^0.5.19",
+    "style-loader": "^1.2.1",
     "webpack-dev-middleware": "^3.7.2",
     "webpack-hot-middleware": "^2.25.0",
     "whatwg-fetch": "^3.1.0"
