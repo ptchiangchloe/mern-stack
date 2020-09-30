@@ -1,30 +1,34 @@
 import * as React from 'react';
 import ItemRow from './ItemRow';
+import '../scss/ItemTable.scss';
 
 type TableProps = {
     items: any,
 }
 
+const itemListHeader = ['ID', 'BRAND', 'CATEGORY', 'COLOR', 'PRICE', 'PURCHASE DATE', 'NOTE', '']
+
 const ItemTable: React.FC<TableProps> = ({ items }) => (
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Brand</th>
-                <th>Category</th>
-                <th>Color</th>
-                <th>price</th>
-                <th>Purchase Date</th>
-                <th>Note</th>
-                <th />
-            </tr>
-        </thead>
-        <tbody>
-            {
-                items.map((item: {_id: string}) => <ItemRow key={item._id} item={item} />)
-            }
-        </tbody>
-    </table>
+    <div className="itemlist-container">
+        <table className="table">
+            <thead>
+                <tr>
+                    {
+                        itemListHeader.map(colName => {
+                            return (
+                                <th>{colName}</th>
+                            )
+                        })
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    items.map((item: {_id: string}) => <ItemRow key={item._id} item={item} />)
+                }
+            </tbody>
+        </table>
+    </div>
 );
 
 export default ItemTable;

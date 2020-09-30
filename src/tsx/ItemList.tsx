@@ -1,11 +1,11 @@
 import * as React from 'react';
 import 'whatwg-fetch';
 import debug from 'debug';
-import { Button, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 import ItemTable from './ItemTable';
 import IssueAdd from './IssueAdd';
-import IssueFilter from './IssueFilter';
+// import IssueFilter from './IssueFilter';
 
 const log = debug('app:issueList');
 
@@ -115,22 +115,11 @@ export default class ItemList extends React.Component<MyProps, MyState> {
 
         return (
             <Container>
-                <IssueFilter
-                    setFilter={this.setFilter}
-                    initFilter={this.props.location.search}
-                />
-                <hr />
                 <ItemTable
                     items={items}
                 />
                 <hr />
                 <IssueAdd createIssue={this.createIssue} />
-                <Button
-                    type="button"
-                >
-                    Click Me
-
-                </Button>
             </Container>
         );
     }
