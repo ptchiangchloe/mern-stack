@@ -7,24 +7,6 @@ const validIssueStatus = {
     Closed: true,
 };
 
-const issueFieldType = {
-    status: 'required',
-    owner: 'required',
-    effort: 'optional',
-    created: 'required',
-    completionDate: 'optional',
-    title: 'required',
-};
-
-const cardigan = {
-    brand: 'Comme des garcons',
-    category: 'top',
-    color: 'black',
-    note: 'This is a cardigan I bought in Japan last year',
-    price: 340,
-    purchaseDate: '2019-04-07',
-}
-
 const itemFieldType = {
     brand: 'required',
     category: 'required',

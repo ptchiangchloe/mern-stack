@@ -8,9 +8,7 @@ import {
 import { withRouter } from 'react-router';
 
 import Navbar from './Navbar';
-
 import ItemList from './ItemList';
-
 import IssueEdit from './IssueEdit';
 
 const NoMatch = () => <p>Page Not Found</p>;

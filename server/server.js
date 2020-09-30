@@ -9,6 +9,7 @@ import { mongoAltas } from '../credential';
 
 import Item from './item';
 // import config from '../webpack.config';
+import './api/user/controller';
 
 SourceMapSupport.install();
 
@@ -18,53 +19,6 @@ app.use(express.static('static'));
 app.use(bodyParser.json());
 
 app.use('/static', express.static('public'));
-
-const dbUser = mongoAltas.user
-const dbPassword = mongoAltas.password
-const dbName = mongoAltas.name
-const uri = `mongodb://${dbUser}:${dbPassword}@mern-shard-00-00.9djbj.mongodb.net:27017,mern-shard-00-01.9djbj.mongodb.net:27017,mern-shard-00-02.9djbj.mongodb.net:27017/${dbName}?ssl=true&replicaSet=mern-shard-0&authSource=admin&retryWrites=true&w=majority`
-let db;
-
-MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-.then( client => {
-    db = client.db("closet");
-    app.listen(3000, () => {
-        console.log("App started on port 3000");
-    })
-    console.log(db.databaseName)
-})
-.catch(err => {
-    console.log(err)
-  // perform actions on the collection object
-  // When we leave the page we should close the client? 
-  // client.close();
-})
-
-// if (process.env.NODE_ENV !== 'production') {
-//     config.entry.app.push('webpack-hot-middleware/client', 'webpack/hot/only-dev-server');
-//     config.plugins.push(new webpack.HotModuleReplacementPlugin());
-
-//     const bundler = webpack(config);
-//     app.use(webpackDevMiddleware(bundler, { noInfo: true }));
-//     app.use(webpackHotMiddleware(bundler, { log: console.log }));
-// }
-
-app.get('/api/items', (req, res) => {
-    const filter = {};
-    console.log(req.query);
-    // if (req.query.status) filter.status = req.query.status;
-    // if (req.query.effort_lte || req.query.effor_gte) filter.effort = {};
-    // if (req.query.effort_lte) filter.effort.$lte = parseInt(req.query.effort_lte, 10);
-    // if (req.query.effor_gte) filter.effort.$gte = parseInt(req.query.effort_gte, 10);
-    db.collection('items').find(filter).toArray().then((items) => {
-        const metadata = { total_count: items.length };
-        res.json({ _metadata: metadata, records: items });
-    })
-    .catch((error) => {
-        console.log(error);
-        res.status(500).json({ message: `Internal Server Error: ${error}` });
-    });
-});
 
 app.post('/api/item', (req, res) => {
     const newItem = req.body;
