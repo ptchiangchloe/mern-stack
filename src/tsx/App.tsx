@@ -1,3 +1,8 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'jquery';
+import 'popper.js';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
+
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import debug from 'debug';
@@ -9,6 +14,7 @@ import {
 import { withRouter } from 'react-router';
 
 import ItemList from './ItemList';
+
 import IssueEdit from './IssueEdit';
 import Navbar from './Navbar';
 import '../scss/App.scss';
