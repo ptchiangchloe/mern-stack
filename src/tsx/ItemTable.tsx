@@ -6,7 +6,7 @@ type TableProps = {
 }
 
 const ItemTable: React.FC<TableProps> = ({ items }) => (
-    <table style={{ borderTop: '3px solid red', padding: '16px' }}>
+    <table>
         <thead>
             <tr>
                 <th>Id</th>
