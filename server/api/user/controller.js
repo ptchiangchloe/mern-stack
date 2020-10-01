@@ -1,5 +1,9 @@
 import express from 'express';
+import bodyParser from 'body-parser';
+
 const app = express();
+app.use(bodyParser.json());
+
 import { mongoAltas } from '../../../credential';
 import { MongoClient, ObjectId } from 'mongodb';
 
@@ -22,6 +26,8 @@ MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   // When we leave the page we should close the client? 
   // client.close();
 })
+
+import Item from '../../item';
 
 app.get('/api/items', (req, res) => {
     const filter = {};
@@ -54,4 +60,70 @@ app.get('/api/items/:id', (req, res) => {
             console.log(error);
             res.status(500).json({ message: `Internal Server Error: ${error}` });
         });
+});
+
+app.post('/api/item', (req, res) => {
+    const newItem = req.body;
+    // newIssue.created = new Date();
+    if(!newItem.purchaseDate) {
+        newItem.purchaseDate = new Date()
+    }
+
+    // we should validate price input in the client-side
+    const err = Item.validateItem(newItem);
+
+    if (err) {
+        res.status(422).json({ message: `Invalid request/ Unprocessable Entity: ${err}` });
+        return;
+    }
+
+    console.log(newItem)
+    db.collection('items').insertOne(Item.cleanupItem(newItem))
+    .then((result) => db.collection('items').find({ _id: result.insertedId }).limit(1).next())
+    .then((theNewItem) => {
+        res.json(theNewItem);
+    })
+    .catch((error) => {
+        console.log(error);
+        res.status(500).json({ message: `Internal Server Error: ${error}` });
+    });
+});
+
+app.put('/api/items/:id', (req, res) => {
+    let itemId;
+    try {
+        itemId = new ObjectId(req.params.id);
+    } catch (error) {
+        res.status(422).json({
+            message: `Invalid issue ID format: ${error}`,
+        });
+        return;
+    }
+
+    const item = req.body;
+    console.log(req)
+    // The reason we need to delete the item._id is because performing an update on the 
+    // path '_id' would modify the immutable field '_id'
+    delete item._id;
+
+    const err = Item.validateItem(item);
+    if (err) {
+        res.status(422).json({ message: `Invalid request: ${err}` });
+        return;
+    }
+
+    db.collection('items').updateOne({ _id: itemId }, {
+        $set: item,
+    }).then(() => {
+        db.collection('items').find({ _id: itemId }).limit(1).next()
+            .then((savedItem) => {
+                res.json(savedItem);
+            })
+            .catch((error) => {
+                console.log(error);
+                res.status(500).json({
+                    message: `Internal Server Error: ${error}`,
+                });
+            });
+    });
 });

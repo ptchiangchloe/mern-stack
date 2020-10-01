@@ -84,6 +84,16 @@ export default class IssueEdit extends React.Component<myProps, myState> { // es
             });
     }
 
+    handleChange = (e) => {
+        console.log(e.target.id);
+        console.log(this.state.item)
+        let updatedItem = Object.assign({}, this.state.item);
+        updatedItem[e.target.id] = e.target.value
+        this.setState({
+            item: updatedItem
+        })        
+    }
+
     onSubmit = async (
         e: React.FormEvent<HTMLFormElement>
     ): Promise<void> => {
@@ -129,10 +139,10 @@ export default class IssueEdit extends React.Component<myProps, myState> { // es
                         <div className="form-group">
                             <label>ID: {item._id}</label>
                         </div>
-                        BRAND:
-                        {' '}
-                        {item.brand}
-                        <br />
+                        <div className="form-group">
+                            <label>BRAND</label>
+                            <input type="text" className="form-control" id="brand" onChange={this.handleChange}></input>
+                        </div>
                         CATEGORY:
                         {' '}
                         {item.category}

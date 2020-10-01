@@ -9,18 +9,17 @@ const validIssueStatus = {
 
 const itemFieldType = {
     brand: 'required',
-    category: 'required',
-    color: 'required',
+    category: 'optional',
+    color: 'optional',
     // id => mongoDB insertOne will automatically create an id property.
     note: 'optional',
-    price: 'required',
-    purchaseDate: 'required',
+    price: 'optional',
+    purchaseDate: 'optional',
 }
 
 // check all the request body's each property's value has correct data type.
 // dates have to be proper dates
 // data relationship validation
-// such as completion date that cannot be lesser than the created or current date.
 // introduce front end validations for more instant user-friendly error messages.
 
 function validateItem(item) {
@@ -43,20 +42,18 @@ function validateItem(item) {
 // Representational state trasfer is a software archietectural style that defines
 // a set of constraints to be used for creating Web services.
 
-function cleanupItem(issue) {
-    const cleanedUpIssue = {};
-    Object.keys(issue).forEach((field) => {
+function cleanupItem(item) {
+    const cleanedUpItem = {};
+    Object.keys(items).forEach((field) => {
         // we use this condition to filter out all the unwanted properties to prepare 
         // the object for database injection
-        if (itemFieldType[field]) cleanedUpIssue[field] = issue[field];
+        if (itemFieldType[field]) cleanedUpItem[field] = item[field];
     });
-    return cleanedUpIssue;
+    return cleanedUpItem;
 }
 
-function convertIssue(issue) {
-    if (issue.created) issue.created = new Date(issue.created);
-    if (issue.completionDate) issue.completionDate = new Date(issue.completionDate);
-    return cleanupIssue(issue);
+function convertIssue(item) {
+    return cleanupIssue(item);
 }
 
 export default { validateItem, convertIssue, cleanupItem };
