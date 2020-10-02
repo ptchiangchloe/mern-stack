@@ -1,23 +1,8 @@
 import React from 'react';
+import { categories } from '../ItemMeta';
 
 interface MyProps {
     handleChange: any
-}
-
-const categories = {
-    outerwear: 'Outerwear and Blazers',
-    sweatshirts: 'Sweatshirts and Sweatpants',
-    activewear:'Activewear',
-    sweaters: 'Sweaters',
-    shirts: 'Shirts',
-    tshirts: 'T-shirts',
-    jeans: 'Jeans',
-    pants: 'Pants',
-    shorts: 'Shorts',
-    underwear: 'Underwear',
-    socks: 'Socks',
-    accessories: 'Accessories',
-    shoes: 'Shoes'
 }
 
 export const ItemCategoryForm: React.FC<MyProps> = (props) => {

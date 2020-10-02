@@ -1,16 +1,13 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import { categories, colors } from '../ItemMeta';
 
 type RowProps = {
     item: any
 }
 
 const ItemRow: React.FC<RowProps> = ({ item }) => {
-    function onDeleteClick() {
-        // deleteIssue(item._id);
-    }
-
     return (
         <tr>
             <td>
@@ -19,12 +16,16 @@ const ItemRow: React.FC<RowProps> = ({ item }) => {
                 </Link>
             </td>
             <td>{item.brand}</td>
-            <td>{item.category}</td>
-            <td>{item.color}</td>
+            <td>{categories[item.category]}</td>
+            <td>{colors[item.color]}</td>
             <td>{item.price}</td>
             <td>{item.purchaseDate}</td>
             <td>{item.note}</td>
-            <td><Button size="sm" onClick={onDeleteClick}><span className="glyphicon glyphicon-trash" aria-hidden="true" /></Button></td>
+            <td>
+                <Button size="sm">
+                    <span className="glyphicon glyphicon-trash" aria-hidden="true" />
+                </Button>
+            </td>
         </tr>
     );
 };

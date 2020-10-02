@@ -124,7 +124,7 @@ export default class ItemEdit extends React.Component<myProps, myState> { // esl
                     item = {item}
                     handleSubmit={this.handleSubmit} 
                     handleChange={this.handleChange}
-                     />
+                />
             </Container>
         );
     }
