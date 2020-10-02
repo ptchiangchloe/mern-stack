@@ -6,7 +6,7 @@ type TableProps = {
     items: any,
 }
 
-const itemListHeader = ['ID', 'BRAND', 'CATEGORY', 'COLOR', 'PRICE', 'PURCHASE DATE', 'NOTE', '']
+const itemListHeader = ['ID', 'BRAND', 'CATEGORY', 'COLOR', 'SIZE', 'PURCHASE DATE', 'NOTE', '']
 
 const ItemTable: React.FC<TableProps> = ({ items }) => (
     <div className="itemlist-container">

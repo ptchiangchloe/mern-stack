@@ -23,6 +23,7 @@ export default class ItemEdit extends React.Component<myProps, myState> { // esl
                 price: '',
                 purchaseDate: null,
                 note: '',
+                size: '',
             },
             invalidFields: {}
         };
@@ -57,21 +58,9 @@ export default class ItemEdit extends React.Component<myProps, myState> { // esl
             });
     }
 
-    onValidityChange(event: React.FormEvent, valid: boolean) {
-        const invalidFields = { ...this.state.invalidFields };
-        const target = event.target as HTMLInputElement;
-        if (!valid) {
-            invalidFields[target.name] = true;
-        } else {
-            delete invalidFields[target.name];
-        }
-        this.setState({ invalidFields });
-    }
-
     handleChange = (e) => {
         console.log(e.target.id);
         let updatedItem = Object.assign({}, this.state.item);
-        console.log(updatedItem)
 
         updatedItem[e.target.id] = e.target.value
         console.log(updatedItem)
@@ -85,6 +74,8 @@ export default class ItemEdit extends React.Component<myProps, myState> { // esl
         e: React.FormEvent<HTMLFormElement>
     ): Promise<void> => {
         e.preventDefault();
+
+        console.log(this.state.item.size)
 
         if (Object.keys(this.state.invalidFields).length !== 0) {
             return;

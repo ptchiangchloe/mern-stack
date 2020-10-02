@@ -23,7 +23,14 @@ const colors = {
     carmel: 'Carmel',
     navy: 'Navy',
     multicol: 'Multi Color',
-    white: 'White'
+    white: 'White',
+    pink: 'Pink',
 }
 
-export { categories, colors };
+const sizes = {
+    small: 'S',
+    medium: 'M',
+    large: 'L',
+}
+
+export { categories, colors, sizes };

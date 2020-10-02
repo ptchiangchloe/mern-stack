@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import { categories, colors } from '../ItemMeta';
+import { categories, colors, sizes } from '../ItemMeta';
 
 type RowProps = {
     item: any
@@ -18,7 +18,7 @@ const ItemRow: React.FC<RowProps> = ({ item }) => {
             <td>{item.brand}</td>
             <td>{categories[item.category]}</td>
             <td>{colors[item.color]}</td>
-            <td>{item.price}</td>
+            <td>{sizes[item.size]}</td>
             <td>{item.purchaseDate}</td>
             <td>{item.note}</td>
             <td>

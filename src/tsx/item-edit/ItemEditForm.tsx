@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import DateInput from '../DateInput';
 import { ItemCategoryForm } from './ItemCategoryForm';
 import { ItemColorForm } from './ItemColorForm';
+import { ItemSizeForm } from './ItemSizeForm';
 
 interface Prop {
     handleSubmit: any,
@@ -33,11 +34,8 @@ export default class ItemEditForm extends React.Component<Prop> {
                         <input type="text" className="form-control" id="brand" onChange={handleChange} value={item.brand}></input>
                     </div>
                     <ItemCategoryForm handleChange={handleChange} />
-                    <ItemColorForm handleChange={handleChange} />
-                    PRICE:
-                    {' '}
-                    {item.price}
-                    <br />
+                    <ItemColorForm handleChange={handleChange} item={item}/>
+                    <ItemSizeForm handleChange={handleChange} item={item}/>
                     PURCHASE DATE:
                     <DateInput
                         name="completionDate"
