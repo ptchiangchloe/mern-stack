@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ItemRow from './ItemRow';
-import '../scss/ItemTable.scss';
+import '../../scss/ItemTable.scss';
 
 type TableProps = {
     items: any,

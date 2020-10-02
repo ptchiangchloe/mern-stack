@@ -4,7 +4,7 @@ import debug from 'debug';
 import { Container } from 'react-bootstrap';
 
 import ItemTable from './ItemTable';
-import IssueAdd from './IssueAdd';
+import IssueAdd from '../IssueAdd';
 // import IssueFilter from './IssueFilter';
 
 const log = debug('app:issueList');
