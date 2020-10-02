@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface Props {
+interface MyProps {
     handleChange: any
 }
 
@@ -20,21 +20,19 @@ const categories = {
     shoes: 'Shoes'
 }
 
-export default class ItemCategoryForm extends React.Component<Props> {
-    render() {
-        return (
-            <div className="form-group" onChange={this.props.handleChange}>
-                <label>CATEGORY:</label>
-                <select id="category" className="form-control">
-                    {
-                        Object.keys(categories).map((category) => {
-                            return (
-                                <option value={category}>{categories[category]}</option>
-                            )
-                        })
-                    }          
-                </select>
-            </div>
-        )
-    }
+export const ItemCategoryForm: React.FC<MyProps> = (props) => {
+    return (
+        <div className="form-group" onChange={props.handleChange}>
+            <label>CATEGORY:</label>
+            <select id="category" className="form-control">
+                {
+                    Object.keys(categories).map((category) => {
+                        return (
+                            <option value={category}>{categories[category]}</option>
+                        )
+                    })
+                }          
+            </select>
+        </div>
+    )
 }

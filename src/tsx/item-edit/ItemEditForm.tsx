@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import DateInput from '../DateInput';
-import ItemCategoryForm from './ItemCategoryForm';
+import { ItemCategoryForm } from './ItemCategoryForm';
 
 interface Prop {
     handleSubmit: any,
