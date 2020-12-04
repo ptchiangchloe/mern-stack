@@ -8,6 +8,7 @@ type RowProps = {
 }
 
 const ItemRow: React.FC<RowProps> = ({ item }) => {
+    console.log(item)
     return (
         <tr>
             <td>

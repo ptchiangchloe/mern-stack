@@ -34,7 +34,7 @@ export default class DateInput extends React.Component {
             this.props.onValidityChange(e, valid);
         }
         this.setState({ focused: false, valid });
-        if (valid) this.props.onChange(e, value);
+        if (valid) this.onChange(e, value);
     }
 
     onChange(e) {
@@ -72,7 +72,7 @@ export default class DateInput extends React.Component {
                 name={this.props.name}
                 className={className}
                 value={value}
-                placeholder={this.state.focused ? 'yyyy-mm-dd' : null}
+                // placeholder={this.state.focused ? 'yyyy-mm-dd' : null}
                 onFocus={this.onFocus}
                 onBlur={this.onBlur}
                 onChange={this.onChange}

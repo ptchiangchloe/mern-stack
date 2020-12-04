@@ -23,6 +23,8 @@ export default class ItemEditForm extends React.Component<Prop> {
     render() {
         let {handleSubmit, handleChange, item} = this.props
 
+        console.log(item)
+
         return (
             <div className="form-container">
                 <form onSubmit={handleSubmit} >
