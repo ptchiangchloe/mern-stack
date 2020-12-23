@@ -1,12 +1,7 @@
 import React from 'react';
 import { colors } from '../ItemMeta';
 
-interface MyProps {
-    handleChange: any,
-    item: any,
-}
-
-export const ItemColorForm: React.FC<MyProps> = (props) => {
+export const ItemColorForm = (props) => {
     return (
         <div className="form-group" onChange={props.handleChange}>
             <label>COLOR:</label>

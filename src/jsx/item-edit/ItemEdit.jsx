@@ -1,17 +1,7 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
 import ItemEditForm from './ItemEditForm';
 
-interface myProps {
-    match: any
-}
-
-interface myState {
-    item: any,
-    invalidFields: any
-}
-
-export default class ItemEdit extends React.Component<myProps, myState> { // eslint-disable-line
+export default class ItemEdit extends React.Component { // eslint-disable-line
     constructor(props) {
         super(props);
         this.state = {
@@ -70,9 +60,7 @@ export default class ItemEdit extends React.Component<myProps, myState> { // esl
         })        
     }
     
-    handleSubmit = async (
-        e: React.FormEvent<HTMLFormElement>
-    ): Promise<void> => {
+    handleSubmit = async (e) => {
         e.preventDefault();
 
         console.log(this.state.item.size)
@@ -110,13 +98,13 @@ export default class ItemEdit extends React.Component<myProps, myState> { // esl
         const { item } = this.state;
 
         return (
-            <Container>
+            <div>
                 <ItemEditForm 
                     item = {item}
                     handleSubmit={this.handleSubmit} 
                     handleChange={this.handleChange}
                 />
-            </Container>
+            </div>
         );
     }
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 export default class DateInput extends React.Component {
     constructor(props) {
-        super(props);
+        super();
         this.state = {
             value: '',
             focused: false,

@@ -13,7 +13,7 @@ module.exports = {
         historyApiFallback: true,
     },
     devtool: 'source-map',
-    entry: './src/tsx/App.tsx',
+    entry: './src/jsx/App.jsx',
     output: {
         path: path.join(__dirname, '/static'),
         filename: 'app.bundle.js',
@@ -30,11 +30,6 @@ module.exports = {
                     // all transforms and file types other than pure JavaScript require loaders
                     // in webpack. babel-loader 8^ should be match other babel modules 7^
                 },
-            },
-            {
-                test: /\.tsx?$/,
-                use:  'ts-loader',
-                exclude: /node_modules/,
             },
             {
                 test: /\.s[ac]ss$/i,

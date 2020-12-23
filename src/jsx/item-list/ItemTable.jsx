@@ -2,21 +2,17 @@ import * as React from 'react';
 import ItemRow from './ItemRow';
 import '../../scss/ItemTable.scss';
 
-type TableProps = {
-    items: any,
-}
-
 const itemListHeader = ['ID', 'BRAND', 'CATEGORY', 'COLOR', 'SIZE', 'PURCHASE DATE', 'NOTE', '']
 
-const ItemTable: React.FC<TableProps> = ({ items }) => (
+const ItemTable = ({ items }) => (
     <div className="itemlist-container">
         <table className="table">
             <thead>
                 <tr>
                     {
-                        itemListHeader.map(colName => {
+                        itemListHeader.map((colName, index) => {
                             return (
-                                <th>{colName}</th>
+                                <th key={index}>{colName}</th>
                             )
                         })
                     }
@@ -24,7 +20,7 @@ const ItemTable: React.FC<TableProps> = ({ items }) => (
             </thead>
             <tbody>
                 {
-                    items.map((item: {_id: string}) => <ItemRow key={item._id} item={item} />)
+                    items.map((item) => <ItemRow key={item._id} item={item} />)
                 }
             </tbody>
         </table>

@@ -1,32 +1,21 @@
 import * as React from 'react';
 import 'whatwg-fetch';
 import debug from 'debug';
-import { Container } from 'react-bootstrap';
 
 import ItemTable from './ItemTable';
-import IssueAdd from '../IssueAdd';
+import CreateItem from '../CreateItem';
 // import IssueFilter from './IssueFilter';
 
 const log = debug('app:issueList');
 
-interface MyProps {
-    location: any,
-    history: any,
-}
-
-interface MyState {
-    items: Array<object>,
-}
-
-export default class ItemList extends React.Component<MyProps, MyState> {
-    constructor(props: any) {
-        super(props);
-        console.log(props)
+export default class ItemList extends React.Component {
+    constructor(props) {
+        super();
         this.state = { 
             items: []
         };
 
-        this.createIssue = this.createIssue.bind(this);
+        this.createItem = this.createItem.bind(this);
         this.setFilter = this.setFilter.bind(this);
         this.deleteIssue = this.deleteIssue.bind(this);
     }
@@ -35,7 +24,7 @@ export default class ItemList extends React.Component<MyProps, MyState> {
         this.loadData();
     }
 
-    componentDidUpdate(prevProps: any) {
+    componentDidUpdate(prevProps) {
         const { location } = this.props;
         const oldQuery = prevProps.location.search;
         const newQuery = location.search;
@@ -45,7 +34,7 @@ export default class ItemList extends React.Component<MyProps, MyState> {
         this.loadData();
     }
 
-    setFilter(query: string) {
+    setFilter(query) {
         this.props.history.push({
             pathname: this.props.location.pathname,
             search: `?${new URLSearchParams(query)}`,
@@ -72,7 +61,7 @@ export default class ItemList extends React.Component<MyProps, MyState> {
         });
     }
 
-    createIssue(newIssue: any) {
+    createItem(newIssue) {
         // console.log(newIssue)
         const { items } = this.state;
         fetch('/api/issues', {
@@ -100,7 +89,7 @@ export default class ItemList extends React.Component<MyProps, MyState> {
         }).catch((err) => { alert(`Failed in sending data to server: ${err.message}`); });
     }
 
-    deleteIssue(id: string) {
+    deleteIssue(id) {
         fetch(`/api/issues/${id}`, {
             method: 'DELETE',
         })
@@ -114,13 +103,13 @@ export default class ItemList extends React.Component<MyProps, MyState> {
         const { items } = this.state;
 
         return (
-            <Container>
+            <div className="container">
                 <ItemTable
                     items={items}
                 />
                 <hr />
-                <IssueAdd createIssue={this.createIssue} />
-            </Container>
+                <CreateItem createItem={this.createItem} />
+            </div>
         );
     }
 }

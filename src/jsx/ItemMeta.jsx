@@ -33,4 +33,12 @@ const sizes = {
     large: 'L',
 }
 
-export { categories, colors, sizes };
+const brands = {
+    'prada': 'Prada',
+    'calvin-klein': 'Calvin Klein',
+    'forever-21': 'Forever 21',
+    'fred-perry': 'Fred Perry',
+    'diesel': 'Diesel'
+}
+
+export { categories, colors, sizes, brands };

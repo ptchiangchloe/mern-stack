@@ -5,25 +5,9 @@ import { ItemCategoryForm } from './ItemCategoryForm';
 import { ItemColorForm } from './ItemColorForm';
 import { ItemSizeForm } from './ItemSizeForm';
 
-interface Prop {
-    handleSubmit: any,
-    handleChange: any,
-    item: {
-        _id: string,
-        brand: string,
-        category: string,
-        color: string,
-        price: string,
-        purchaseDate: string,
-        note: string
-    }
-}
-
-export default class ItemEditForm extends React.Component<Prop> {
+export default class ItemEditForm extends React.Component {
     render() {
         let {handleSubmit, handleChange, item} = this.props
-
-        console.log(item)
 
         return (
             <div className="form-container">

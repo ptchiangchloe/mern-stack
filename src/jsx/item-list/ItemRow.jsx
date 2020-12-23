@@ -1,13 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 import { categories, colors, sizes } from '../ItemMeta';
 
-type RowProps = {
-    item: any
-}
-
-const ItemRow: React.FC<RowProps> = ({ item }) => {
+const ItemRow = ({ item }) => {
     console.log(item)
     return (
         <tr>
@@ -23,9 +18,9 @@ const ItemRow: React.FC<RowProps> = ({ item }) => {
             <td>{item.purchaseDate}</td>
             <td>{item.note}</td>
             <td>
-                <Button size="sm">
+                <button size="sm">
                     <span className="glyphicon glyphicon-trash" aria-hidden="true" />
-                </Button>
+                </button>
             </td>
         </tr>
     );

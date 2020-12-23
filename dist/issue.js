@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
+
 var validIssueStatus = {
   New: true,
   Open: true,
@@ -19,7 +20,9 @@ var issueFieldType = {
   created: 'required',
   completionDate: 'optional',
   title: 'required'
-}; // check all the request body's each property's value has correct data type.
+}; 
+
+// check all the request body's each property's value has correct data type.
 // dates have to be proper dates
 // data relationship validation
 // such as completion date that cannot be lesser than the created or current date. 
@@ -41,7 +44,9 @@ function validateIssue(issue) {
   }
 
   return null;
-} // APIs are all about intuitiveness and predictability. 
+} 
+
+// APIs are all about intuitiveness and predictability. 
 // REST gives you a framework for how to think about the structure APIs.
 // how to implement and consume APIs. 
 // Representational state trasfer is a software archietectural style that defines a set of constraints to be used for 

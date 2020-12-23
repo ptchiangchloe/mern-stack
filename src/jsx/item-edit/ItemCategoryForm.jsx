@@ -1,11 +1,7 @@
 import React from 'react';
 import { categories } from '../ItemMeta';
 
-interface MyProps {
-    handleChange: any
-}
-
-export const ItemCategoryForm: React.FC<MyProps> = (props) => {
+export const ItemCategoryForm = (props) => {
     return (
         <div className="form-group" onChange={props.handleChange}>
             <label>CATEGORY:</label>
