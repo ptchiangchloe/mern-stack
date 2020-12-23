@@ -3,12 +3,19 @@ import { brands as brandsForSelections,
     categories as categoriesForSelections,
     colors as colorsForSelections 
 } from './ItemMeta';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import '../scss/CreateItem.scss';
 
 export default class CreateItem extends React.Component{
     constructor(props) {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    state = {
+        targetDate: new Date()
     }
 
     shouldComponentUpdate() {
@@ -38,6 +45,7 @@ export default class CreateItem extends React.Component{
     }
 
     render() {
+        const {targetDate, setTargetDate} = this.state
         return (
             <div className="modal-container">
                 <div>
@@ -87,10 +95,18 @@ export default class CreateItem extends React.Component{
                                         </select>
                                     </div>
                                     <div className="form-group">
-                                        <input type="text" name="purchase-date" placeholder="Purchase Date" />
+                                        <label htmlFor="category-select">Purchase Date</label>
+                                        <DatePicker type="text" name="purchase-date" placeholder="Purchase Date"
+                                            selected={targetDate}
+                                            onChange={date => setTargetDate(date)} 
+                                            className="form-control"
+                                        />
                                     </div>
                                     <div className="form-group">
-                                        <input type="text" name="note" placeholder="Note" />
+                                        <label htmlFor="category-select">Note</label>
+                                        <textarea className="form-control" 
+                                        type="text" name="note" placeholder="Note" 
+                                        rows="3"/>
                                     </div>
                                     <button type="submit" className="btn btn-primary">Add New Item</button>
                                 </form>

@@ -43,7 +43,11 @@ module.exports = {
                     'sass-loader',
                 ],
                 exclude: /node_modules/,
-            }
+            },
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
+            },
         ],
     },
     // The config below is for reducing duplicated modules being requested over and over again
