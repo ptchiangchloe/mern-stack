@@ -3,7 +3,7 @@ import ItemEditForm from './ItemEditForm';
 
 export default class ItemEdit extends React.Component { // eslint-disable-line
     constructor(props) {
-        super(props);
+        super();
         this.state = {
             item: {
                 _id: '',

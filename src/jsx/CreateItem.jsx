@@ -1,5 +1,8 @@
 import React from 'react';
-import { brands as brandsForSelections } from './ItemMeta';
+import { brands as brandsForSelections,
+    categories as categoriesForSelections,
+    colors as colorsForSelections 
+} from './ItemMeta';
 
 export default class CreateItem extends React.Component{
     constructor(props) {
@@ -44,18 +47,18 @@ export default class CreateItem extends React.Component{
                 </div>
                 <div className="modal fade" tabIndex="-1" role="dialog" id="create-modal">
                     <div className="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
+                        <div className="modal-content">
+                            <div className="modal-header">
                                 <h4 className="modal-title">Create a new item</h4>
                                 <button type="button" className="close" data-dismiss="modal">
                                     <span>&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                                 <form name="issueAdding" onSubmit={this.handleSubmit}>
                                     <div className="form-group">
-                                        <label for="brand-select">Brand</label>
-                                        <select class="form-control" name="brand" placeholder="Brand" id="brand-select">
+                                        <label htmlFor="brand-select">Brand</label>
+                                        <select className="form-control" name="brand" id="brand-select">
                                             {
                                                 Object.entries(brandsForSelections).map((item, index) => 
                                                     <option key={index}>{item[1]}</option>
@@ -64,10 +67,24 @@ export default class CreateItem extends React.Component{
                                         </select>
                                     </div>
                                     <div className="form-group">
-                                        <input type="text" name="category" placeholder="Category" />
+                                        <label htmlFor="category-select">Category</label>
+                                        <select className="form-control" name="category" id="category-select">
+                                            {
+                                                Object.entries(categoriesForSelections).map((item, index) => 
+                                                    <option key={index}>{item[1]}</option>
+                                                )
+                                            }
+                                        </select>
                                     </div>
                                     <div className="form-group">
-                                        <input type="text" name="color" placeholder="Color" />
+                                        <label htmlFor="category-select">Color</label>
+                                        <select className="form-control" name="color" id="color-select">
+                                            {
+                                                Object.entries(colorsForSelections).map((item, index) => 
+                                                    <option key={index}>{item[1]}</option>
+                                                )
+                                            }
+                                        </select>
                                     </div>
                                     <div className="form-group">
                                         <input type="text" name="purchase-date" placeholder="Purchase Date" />

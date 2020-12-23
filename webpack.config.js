@@ -30,6 +30,7 @@ module.exports = {
                     // all transforms and file types other than pure JavaScript require loaders
                     // in webpack. babel-loader 8^ should be match other babel modules 7^
                 },
+                exclude: /node_modules/,
             },
             {
                 test: /\.s[ac]ss$/i,
@@ -42,10 +43,6 @@ module.exports = {
                     'sass-loader',
                 ],
                 exclude: /node_modules/,
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
             }
         ],
     },
