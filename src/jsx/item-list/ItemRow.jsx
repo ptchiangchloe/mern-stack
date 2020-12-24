@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { categories, colors, sizes } from '../ItemMeta';
 
 const ItemRow = ({ item }) => {
-    console.log(item)
+
     return (
         <tr>
             <td>

@@ -66,7 +66,7 @@ app.post('/api/item', (req, res) => {
     const newItem = req.body;
     // newIssue.created = new Date();
     if(!newItem.purchaseDate) {
-        newItem.purchaseDate = new Date()
+        newItem.purchaseDate = new Date();
     }
 
     // we should validate price input in the client-side
@@ -78,15 +78,15 @@ app.post('/api/item', (req, res) => {
     }
 
     console.log(newItem)
-    db.collection('items').insertOne(Item.cleanupItem(newItem))
-    .then((result) => db.collection('items').find({ _id: result.insertedId }).limit(1).next())
-    .then((theNewItem) => {
-        res.json(theNewItem);
-    })
-    .catch((error) => {
-        console.log(error);
-        res.status(500).json({ message: `Internal Server Error: ${error}` });
-    });
+    // db.collection('items').insertOne(Item.cleanupItem(newItem))
+    // .then((result) => db.collection('items').find({ _id: result.insertedId }).limit(1).next())
+    // .then((theNewItem) => {
+    //     res.json(theNewItem);
+    // })
+    // .catch((error) => {
+    //     console.log(error);
+    //     res.status(500).json({ message: `Internal Server Error: ${error}` });
+    // });
 });
 
 app.put('/api/items/:id', (req, res) => {

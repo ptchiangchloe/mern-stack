@@ -1,10 +1,8 @@
 import * as React from 'react';
 import 'whatwg-fetch';
 import debug from 'debug';
-
 import ItemTable from './ItemTable';
 import CreateItem from '../CreateItem';
-// import IssueFilter from './IssueFilter';
 
 const log = debug('app:issueList');
 
@@ -61,25 +59,23 @@ export default class ItemList extends React.Component {
         });
     }
 
-    createItem(newIssue) {
-        // console.log(newIssue)
+    createItem(newItem) {
         const { items } = this.state;
-        fetch('/api/issues', {
+
+        // Before sending it to server, we should check if there's dangerous data that can hurt our server
+        
+        fetch('/api/item', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newIssue),
+            body: JSON.stringify(newItem),
         }).then((response) => {
             log(response);
             if (response.ok) {
-                response.json().then((updatedIssue) => {
-                    updatedIssue.created = new Date(updatedIssue.created);
-                    if (updatedIssue.completionDate) {
-                        updatedIssue.completionDate = new Date(updatedIssue.completionDate);
-                    }
-                    const newIssues = items.concat(updatedIssue);
-                    this.setState({ items: newIssues });
+                response.json().then((updatedItem) => {
+                    const newItem = items.concat(updatedItem);
+                    this.setState({ item: newItem });
                 });
             } else {
                 response.json().then((error) => {
@@ -93,10 +89,10 @@ export default class ItemList extends React.Component {
         fetch(`/api/issues/${id}`, {
             method: 'DELETE',
         })
-            .then((response) => {
-                if (!response.ok) alert('Failed to delete issue');
-                else this.loadData();
-            });
+        .then((response) => {
+            if (!response.ok) alert('Failed to delete issue');
+            else this.loadData();
+        });
     }
 
     render() {

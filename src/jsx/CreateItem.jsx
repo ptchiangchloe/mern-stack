@@ -15,11 +15,7 @@ export default class CreateItem extends React.Component{
     }
 
     state = {
-        targetDate: new Date()
-    }
-
-    shouldComponentUpdate() {
-        return false;
+        targetDate: '',
     }
 
     handleClick(e) {
@@ -28,24 +24,39 @@ export default class CreateItem extends React.Component{
     }
 
     handleSubmit(e) {
+        e.preventDefault();
+
         const { createItem } = this.props;
         const forms = document.forms
-        const form = forms.issueAdding;
+        const form = forms.itemAdding;
 
-        e.preventDefault();
+        const {brand, category, color, purchaseDate, note} = form;
+
         createItem({
-            owner: form.owner.value,
-            title: form.title.value,
-            status: 'New',
-            created: new Date(),
+            brand: brand.value,
+            category: category.value,
+            color: color.value,
+            purchaseDate: purchaseDate.value,
+            note: note.value
         });
         // clear the form for the next input
-        form.owner.value = '';
-        form.title.value = '';
+        brand.value = '';
+        category.value = '';
+        color.value = '';
+        purchaseDate.value = '';
+        note.value = '';
+    }
+
+    setTargetDate = (e) => {
+        this.setState({
+            targetDate: e
+        })
+        console.log(this.state.targetDate)
     }
 
     render() {
-        const {targetDate, setTargetDate} = this.state
+        const {targetDate, brand} = this.state
+        console.log(targetDate)
         return (
             <div className="modal-container">
                 <div>
@@ -63,13 +74,14 @@ export default class CreateItem extends React.Component{
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <form name="issueAdding" onSubmit={this.handleSubmit}>
+                                <form name="itemAdding" onSubmit={this.handleSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="brand-select">Brand</label>
                                         <select className="form-control" name="brand" id="brand-select">
+                                            <option key={0}></option>
                                             {
                                                 Object.entries(brandsForSelections).map((item, index) => 
-                                                    <option key={index}>{item[1]}</option>
+                                                    <option key={index+1}>{item[1]}</option>
                                                 )
                                             }
                                         </select>
@@ -77,9 +89,10 @@ export default class CreateItem extends React.Component{
                                     <div className="form-group">
                                         <label htmlFor="category-select">Category</label>
                                         <select className="form-control" name="category" id="category-select">
+                                            <option key={0}></option>
                                             {
                                                 Object.entries(categoriesForSelections).map((item, index) => 
-                                                    <option key={index}>{item[1]}</option>
+                                                    <option key={index+1}>{item[1]}</option>
                                                 )
                                             }
                                         </select>
@@ -87,25 +100,26 @@ export default class CreateItem extends React.Component{
                                     <div className="form-group">
                                         <label htmlFor="category-select">Color</label>
                                         <select className="form-control" name="color" id="color-select">
+                                            <option key={0}></option>
                                             {
                                                 Object.entries(colorsForSelections).map((item, index) => 
-                                                    <option key={index}>{item[1]}</option>
+                                                    <option key={index+1}>{item[1]}</option>
                                                 )
                                             }
                                         </select>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="category-select">Purchase Date</label>
-                                        <DatePicker type="text" name="purchase-date" placeholder="Purchase Date"
+                                        <DatePicker type="text" name="purchaseDate" 
                                             selected={targetDate}
-                                            onChange={date => setTargetDate(date)} 
+                                            onChange={this.setTargetDate} 
                                             className="form-control"
                                         />
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="category-select">Note</label>
                                         <textarea className="form-control" 
-                                        type="text" name="note" placeholder="Note" 
+                                        type="text" name="note" placeholder="Write your additional notes here..." 
                                         rows="3"/>
                                     </div>
                                     <button type="submit" className="btn btn-primary">Add New Item</button>
