@@ -11,8 +11,7 @@ let db;
 const dbUser = mongoAltas.user
 const dbPassword = mongoAltas.password
 const dbName = mongoAltas.name
-const uri = `mongodb://${dbUser}:${dbPassword}@mern-shard-00-00.9djbj.mongodb.net:27017,mern-shard-00-01.9djbj.mongodb.net:27017,mern-shard-00-02.9djbj.mongodb.net:27017/${dbName}?ssl=true&replicaSet=mern-shard-0&authSource=admin&retryWrites=true&w=majority`
-
+const uri =`mongodb+srv://${dbUser}:${dbPassword}@mern.9djbj.mongodb.net/${dbName}?retryWrites=true&w=majority`
 MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 .then( client => {
     db = client.db("closet");
@@ -78,16 +77,22 @@ app.post('/api/item', (req, res) => {
     }
 
     console.log(newItem)
-    // db.collection('items').insertOne(Item.cleanupItem(newItem))
-    // .then((result) => db.collection('items').find({ _id: result.insertedId }).limit(1).next())
-    // .then((theNewItem) => {
-    //     res.json(theNewItem);
-    // })
-    // .catch((error) => {
-    //     console.log(error);
-    //     res.status(500).json({ message: `Internal Server Error: ${error}` });
-    // });
 });
+
+app.post('/api/add-brand-name', (req, res) => {
+    console.log(req.body);
+    const newBrandName = req.body;
+
+    db.collection('brands').insertOne(newBrandName)
+    .then((dbRes) => {
+        console.log(dbRes);
+        res.status(200).json({message: `new brand name has been added into the db.`})
+    })
+    .catch((error) => {
+        console.log(error);
+        error.status(500).json({ message: `Internal Server Error: ${error}` });
+    });
+})
 
 app.put('/api/items/:id', (req, res) => {
     let itemId;

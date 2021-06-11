@@ -3,6 +3,7 @@ import 'whatwg-fetch';
 import debug from 'debug';
 import ItemTable from './ItemTable';
 import CreateItem from '../CreateItem';
+import CreateBrandLabel from '../CreateBrandLabel';
 
 const log = debug('app:issueList');
 
@@ -105,6 +106,7 @@ export default class ItemList extends React.Component {
                 />
                 <hr />
                 <CreateItem createItem={this.createItem} />
+                <CreateBrandLabel />
             </div>
         );
     }
