@@ -4,6 +4,9 @@ import { categories, colors, sizes } from '../ItemMeta';
 
 const ItemRow = ({ item }) => {
 
+    let categoryKey = item.category.toLowerCase();
+    let colorKey = item.color.toLowerCase();
+
     return (
         <tr>
             <td>
@@ -12,14 +15,14 @@ const ItemRow = ({ item }) => {
                 </Link>
             </td>
             <td>{item.brand}</td>
-            <td>{categories[item.category]}</td>
-            <td>{colors[item.color]}</td>
+            <td>{categories[categoryKey]}</td>
+            <td>{colors[colorKey]}</td>
             <td>{sizes[item.size]}</td>
             <td>{item.purchaseDate}</td>
             <td>{item.note}</td>
             <td>
                 <button size="sm">
-                    <span className="glyphicon glyphicon-trash" aria-hidden="true" />
+                    <span className="fa fa-trash" aria-hidden="true" />
                 </button>
             </td>
         </tr>

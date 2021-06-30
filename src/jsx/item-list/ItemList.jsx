@@ -64,7 +64,6 @@ export default class ItemList extends React.Component {
         const { items } = this.state;
 
         // Before sending it to server, we should check if there's dangerous data that can hurt our server
-        
         fetch('/api/item', {
             method: 'POST',
             headers: {

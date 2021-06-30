@@ -11,9 +11,10 @@ export default class CreateBrandLabel extends React.Component {
         this.setState({
             brand: event.target.value
         })
-        console.log(this.state.brand)
+        // console.log(this.state.brand)
     }
 
+    // Turn string into title cased. 
     toTitleCase(str) {
         return str.replace(
           /\w\S*/g,
@@ -23,11 +24,11 @@ export default class CreateBrandLabel extends React.Component {
         );
     }
 
-    FormatNameToJson(brandName) {
+    FormatNameToJsonFromat(brandName) {
         let res = {};
         let key = brandName.toLowerCase();
         let value = this.toTitleCase(brandName);
-        res[key] = value;
+        res["brand-name"] = value;
         return res;
     }
 
@@ -38,7 +39,9 @@ export default class CreateBrandLabel extends React.Component {
 
         console.log(brand)
 
-        let brandJsonFormat = this.FormatNameToJson(brand);
+        let brandJsonFormat = this.FormatNameToJsonFromat(brand);
+
+        console.log(brandJsonFormat)
 
         fetch('/api/add-brand-name', {
             method: 'POST',
@@ -63,6 +66,7 @@ export default class CreateBrandLabel extends React.Component {
                 });
             }
         }).catch((error)=>{
+            console.log(error.message)
             alert(`Failed in sending post data to the server: ${error.message}`);
         });
     }

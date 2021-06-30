@@ -61,6 +61,22 @@ app.get('/api/items/:id', (req, res) => {
         });
 });
 
+app.get('/api/brands', (req, response) => {
+    db.collection('brands').find().toArray().then((brandsRawData) => {
+        let res = [];
+        for(let i=0; i<brandsRawData.length; i++){
+            if('brand-name' in brandsRawData[i]) {
+                res.push(brandsRawData[i]['brand-name']);
+            }
+        }
+
+        response.json({brands: res})
+    })
+    .catch((error) => {
+        res.status(500).json({message: `Internal Server Error: ${error}`});
+    });
+})
+
 app.post('/api/item', (req, res) => {
     const newItem = req.body;
     // newIssue.created = new Date();
@@ -77,6 +93,14 @@ app.post('/api/item', (req, res) => {
     }
 
     console.log(newItem)
+
+    db.collection('items').insertOne(newItem)
+    .then((dbRes) => {
+        res.status(200).json({message: `new item has been added into the db.`})
+    })
+    .catch((dbErr) => {
+        dbErr.status(500).json({ message: `Internal Server Error: ${error}`});
+    })
 });
 
 app.post('/api/add-brand-name', (req, res) => {
@@ -85,7 +109,7 @@ app.post('/api/add-brand-name', (req, res) => {
 
     db.collection('brands').insertOne(newBrandName)
     .then((dbRes) => {
-        console.log(dbRes);
+        // console.log(dbRes);
         res.status(200).json({message: `new brand name has been added into the db.`})
     })
     .catch((error) => {

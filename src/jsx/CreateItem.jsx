@@ -1,5 +1,5 @@
 import React from 'react';
-import { brands as brandsForSelections,
+import { 
     categories as categoriesForSelections,
     colors as colorsForSelections 
 } from './ItemMeta';
@@ -16,6 +16,23 @@ export default class CreateItem extends React.Component{
 
     state = {
         targetDate: '',
+        brands: '',
+    }
+
+    componentDidMount() {
+        fetch('/api/brands').then((res) => {
+            if(res.ok) {
+                res.json().then((data) => {
+                    this.setState({
+                        brands: data['brands']
+                    })
+                })
+            } else {
+                res.json().then((err) => {
+                    alert(`Failed to fetch issues: ${err.message}`);
+                })
+            }
+        })
     }
 
     handleClick(e) {
@@ -55,7 +72,7 @@ export default class CreateItem extends React.Component{
     }
 
     render() {
-        const {targetDate, brand} = this.state
+        const {targetDate, brands} = this.state
         console.log(targetDate)
         return (
             <div className="modal-container">
@@ -80,7 +97,7 @@ export default class CreateItem extends React.Component{
                                         <select className="form-control" name="brand" id="brand-select">
                                             <option key={0}></option>
                                             {
-                                                Object.entries(brandsForSelections).map((item, index) => 
+                                                Object.entries(brands).map((item, index) => 
                                                     <option key={index+1}>{item[1]}</option>
                                                 )
                                             }
