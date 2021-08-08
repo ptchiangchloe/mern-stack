@@ -18,23 +18,23 @@ Node Requirement:
 
 ### Installing
 
-<!-- A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be -->
-
 Install all the node modules that this project requires. 
 ```
 npm install 
 ```
 
 start the development: 
+
+Use webpack-dev-server that provides live reloading with Hot Module Replacement. It can save valuable development time by only updating what's changed. 
 ```
 npm run watch
 ```
 
 start the express.js server and MongoDB:
+
+use `nodemon` to develop node.js by automatically restarting the node application when file changes in the directory are detected.
 ```
-npm run watch-server 
+npm run start-hook
 ```
 
 <!-- End with an example of getting some data out of the system or using it for a little demo -->
