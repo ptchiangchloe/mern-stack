@@ -25,6 +25,7 @@ const colors = {
     multicol: 'Multi Color',
     white: 'White',
     pink: 'Pink',
+    grey: 'Grey'
 }
 
 const sizes = {
@@ -33,12 +34,4 @@ const sizes = {
     large: 'L',
 }
 
-const brands = {
-    'prada': 'Prada',
-    'calvin-klein': 'Calvin Klein',
-    'forever-21': 'Forever 21',
-    'fred-perry': 'Fred Perry',
-    'diesel': 'Diesel'
-}
-
-export { categories, colors, sizes, brands };
+export { categories, colors, sizes };
