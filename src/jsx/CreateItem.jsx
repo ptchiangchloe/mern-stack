@@ -15,24 +15,15 @@ export default class CreateItem extends React.Component{
     }
 
     state = {
-        targetDate: '',
-        brands: '',
+        targetDate: ''
     }
 
     componentDidMount() {
-        fetch('/api/brands').then((res) => {
-            if(res.ok) {
-                res.json().then((data) => {
-                    this.setState({
-                        brands: data['brands']
-                    })
-                })
-            } else {
-                res.json().then((err) => {
-                    alert(`Failed to fetch issues: ${err.message}`);
-                })
-            }
-        })
+
+    }
+
+    componentDidUpdate() {
+        console.log('createItem component updates.')
     }
 
     handleClick(e) {
@@ -72,7 +63,8 @@ export default class CreateItem extends React.Component{
     }
 
     render() {
-        const {targetDate, brands} = this.state
+        const {targetDate} = this.state;
+        const {brands} = this.props;
         console.log(targetDate)
         return (
             <div className="modal-container">

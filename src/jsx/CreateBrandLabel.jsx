@@ -32,6 +32,10 @@ export default class CreateBrandLabel extends React.Component {
         return res;
     }
 
+    componentDidUpdate() {
+        console.log('createBrandLabel component updates.')
+    }
+
     handleFormSubmit(event) {
         event.preventDefault();
 
@@ -55,6 +59,8 @@ export default class CreateBrandLabel extends React.Component {
                 response.json().then((working) => {
                     alert(`post successfully.${working.message}`)
                 })   
+
+                this.props.updateBrandData();
 
                 this.setState({
                     brand: ''

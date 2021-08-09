@@ -11,16 +11,20 @@ export default class ItemList extends React.Component {
     constructor(props) {
         super();
         this.state = { 
-            items: []
+            items: [],
+            brands: []
         };
 
         this.createItem = this.createItem.bind(this);
         this.setFilter = this.setFilter.bind(this);
         this.deleteIssue = this.deleteIssue.bind(this);
+        this.fetchBrandData = this.fetchBrandData.bind(this);
+
     }
 
     componentDidMount() {
         this.loadData();
+        this.fetchBrandData();
     }
 
     componentDidUpdate(prevProps) {
@@ -38,6 +42,22 @@ export default class ItemList extends React.Component {
             pathname: this.props.location.pathname,
             search: `?${new URLSearchParams(query)}`,
         });
+    }
+
+    fetchBrandData() {
+        fetch('/api/brands').then((res) => {
+            if(res.ok) {
+                res.json().then((data) => {
+                    this.setState({
+                        brands: data['brands']
+                    })
+                })
+            } else {
+                res.json().then((err) => {
+                    alert(`Failed to fetch issues: ${err.message}`);
+                })
+            }
+        })
     }
 
     loadData() {
@@ -104,8 +124,8 @@ export default class ItemList extends React.Component {
                     items={items}
                 />
                 <hr />
-                <CreateItem createItem={this.createItem} />
-                <CreateBrandLabel />
+                <CreateItem createItem={this.createItem} brands={this.state.brands}/>
+                <CreateBrandLabel updateBrandData={this.fetchBrandData} />
             </div>
         );
     }
