@@ -11,12 +11,13 @@ let db;
 const dbUser = mongoAltas.user
 const dbPassword = mongoAltas.password
 const dbName = mongoAltas.name
-const uri =`mongodb+srv://${dbUser}:${dbPassword}@mern.9djbj.mongodb.net/${dbName}?retryWrites=true&w=majority`
+const uri =`mongodb+srv://${dbUser}:${dbPassword}@mern.9djbj.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+
 MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 .then( client => {
     db = client.db("closet");
-    app.listen(3000, () => {
-        console.log("App started on port 3000");
+    app.listen(4000, () => {
+        console.log("App started on port 4000");
     })
 })
 .catch(err => {
@@ -30,7 +31,8 @@ import Item from '../../item';
 
 app.get('/api/items', (req, res) => {
     const filter = {};
-    db.collection('items').find(filter).toArray().then((items) => {
+    db.collection('items').find(filter).toArray()
+    .then((items) => {
         const metadata = { total_count: items.length };
         res.json({ _metadata: metadata, records: items });
     })
@@ -51,6 +53,9 @@ app.get('/api/items/:id', (req, res) => {
 
     db.collection('items').find({ _id: issueId }).limit(1)
         .next()
+        // call the next middleware function
+        // If the current middle function does not end the request-response cycle.
+        
         .then((issue) => {
             if (!issue) res.status(404).json({ message: `No such issue: ${issueId}` });
             else res.json(issue);

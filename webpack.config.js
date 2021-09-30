@@ -7,7 +7,7 @@ module.exports = {
         contentBase: 'static',
         proxy: {
             '/api/*': {
-                target: 'http://localhost:3000',
+                target: 'http://localhost:4000',
             },
         },
         historyApiFallback: true,

@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import debug from 'debug';
 import "core-js/stable";
-import "regenerator-runtime/runtime";
+import 'regenerator-runtime/runtime';
 
 import RoutedApp from './Router';
 import '../scss/App.scss';
