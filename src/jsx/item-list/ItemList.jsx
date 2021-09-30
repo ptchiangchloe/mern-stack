@@ -8,7 +8,7 @@ import CreateBrandLabel from '../CreateBrandLabel';
 const log = debug('app:issueList');
 
 export default class ItemList extends React.Component {
-    constructor(props) {
+    constructor() {
         super();
         this.state = { 
             items: [],
@@ -109,10 +109,10 @@ export default class ItemList extends React.Component {
         fetch(`/api/issues/${id}`, {
             method: 'DELETE',
         })
-        .then((response) => {
-            if (!response.ok) alert('Failed to delete issue');
-            else this.loadData();
-        });
+            .then((response) => {
+                if (!response.ok) alert('Failed to delete issue');
+                else this.loadData();
+            });
     }
 
     render() {

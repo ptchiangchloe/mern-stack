@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+
 import { categories, colors, sizes } from '../ItemMeta';
 
 const ItemRow = ({ item }) => {
-
-    let categoryKey = item.category.toLowerCase();
-    let colorKey = item.color.toLowerCase();
+    const categoryKey = item.category.toLowerCase();
+    const colorKey = item.color.toLowerCase();
 
     return (
         <tr>
@@ -21,7 +22,7 @@ const ItemRow = ({ item }) => {
             <td>{item.purchaseDate}</td>
             <td>{item.note}</td>
             <td>
-                <button size="sm">
+                <button size="sm" type="button">
                     <span className="fa fa-trash" aria-hidden="true" />
                 </button>
             </td>

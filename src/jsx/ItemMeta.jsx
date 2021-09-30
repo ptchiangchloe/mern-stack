@@ -4,7 +4,7 @@ const categories = {
     activewear: 'Activewear',
     sweaters: 'Sweaters',
     shirts: 'Shirts',
-    tshirts: 'T-shirts',
+    't-shirts': 'T-shirts',
     jeans: 'Jeans',
     pants: 'Pants',
     shorts: 'Shorts',

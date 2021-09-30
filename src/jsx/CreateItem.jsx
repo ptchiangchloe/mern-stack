@@ -48,6 +48,7 @@ export default class CreateItem extends React.Component{
             note: note.value
         });
         // clear the form for the next input
+        // todo: add an alert to indicate the result of the action.
         brand.value = '';
         category.value = '';
         color.value = '';
