@@ -18,14 +18,12 @@ export default class ItemList extends React.Component {
         };
 
         this.createItem = this.createItem.bind(this);
-        this.setFilter = this.setFilter.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
         this.fetchBrandData = this.fetchBrandData.bind(this);
-        this.loadData = this.loadData.bind(this);
     }
 
     componentDidMount() {
-        this.loadData();
+        this.loadItemsData();
         this.fetchBrandData();
     }
 
@@ -38,13 +36,6 @@ export default class ItemList extends React.Component {
         if (oldQuery === newQuery) {
             return;
         }
-    }
-
-    setFilter(query) {
-        this.props.history.push({
-            pathname: this.props.location.pathname,
-            search: `?${new URLSearchParams(query)}`,
-        });
     }
 
     fetchBrandData() {
@@ -60,10 +51,10 @@ export default class ItemList extends React.Component {
                     alert(`Failed to fetch issues: ${err.message}`);
                 })
             }
-        })
+        });
     }
 
-    loadData() {
+    loadItemsData() {
         fetch(`/api/items${this.props.location.search}`).then((response) => {
             if (response.ok) {
                 response.json().then((data) => {
@@ -94,8 +85,8 @@ export default class ItemList extends React.Component {
             log(response);
             if (response.ok) {
                 response.json().then((updatedItem) => {
-                    const newItem = items.concat(updatedItem);
-                    this.setState({ item: newItem });
+                    const newItems = items.concat(updatedItem.body);
+                    this.setState({ items: newItems });
                 });
             } else {
                 response.json().then((error) => {
@@ -113,13 +104,13 @@ export default class ItemList extends React.Component {
             if (!response.ok) {
                 alert('Failed to delete issue');
             } else {
-                this.loadData();
+                this.loadItemsData();
             }
         });
     }
 
     render() {
-        const { items } = this.state;
+        const { items, brands } = this.state;
 
         return (
             <div className="container">
@@ -128,7 +119,10 @@ export default class ItemList extends React.Component {
                     deleteItem={this.deleteItem}
                 />
                 <hr />
-                <CreateItem createItem={this.createItem} brands={this.state.brands}/>
+                <CreateItem
+                    createItem={this.createItem}
+                    brands={brands}
+                />
                 <CreateBrandLabel updateBrandData={this.fetchBrandData} />
             </div>
         );

@@ -1,32 +1,32 @@
+/* eslint-disable indent */
 import express from 'express';
 import bodyParser from 'body-parser';
-import { mongoAltas } from '../../../credential';
+import { MongoClient, ObjectId } from 'mongodb';
 
+import { mongoAltas } from '../../../credential';
 
 const app = express();
 app.use(bodyParser.json());
-
-import { MongoClient, ObjectId } from 'mongodb';
 
 let db;
 const dbUser = mongoAltas.user
 const dbPassword = mongoAltas.password
 const dbName = mongoAltas.name
-const uri =`mongodb+srv://${dbUser}:${dbPassword}@mern.9djbj.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${dbUser}:${dbPassword}@mern.9djbj.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
 MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-.then( client => {
-    db = client.db("closet");
-    app.listen(4000, () => {
-        console.log("App started on port 4000");
+    .then( client => {
+        db = client.db("closet");
+        app.listen(4000, () => {
+            console.log("App started on port 4000");
+        })
     })
-})
-.catch(err => {
-    console.log(err)
-  // perform actions on the collection object
-  // When we leave the page we should close the client? 
-  // client.close();
-})
+    .catch(err => {
+        console.log(err)
+    // perform actions on the collection object
+    // When we leave the page we should close the client? 
+    // client.close();
+    })
 
 import Item from '../../item';
 
@@ -56,7 +56,6 @@ app.get('/api/items/:id', (req, res) => {
         .next()
         // call the next middleware function
         // If the current middle function does not end the request-response cycle.
-        
         .then((issue) => {
             if (!issue) res.status(404).json({ message: `No such issue: ${issueId}` });
             else res.json(issue);
@@ -70,7 +69,7 @@ app.get('/api/items/:id', (req, res) => {
 app.get('/api/brands', (req, response) => {
     db.collection('brands').find().toArray().then((brandsRawData) => {
         let res = [];
-        for(let i=0; i<brandsRawData.length; i++){
+        for (let i = 0; i<brandsRawData.length; i++){
             if('brand-name' in brandsRawData[i]) {
                 res.push(brandsRawData[i]['brand-name']);
             }
@@ -86,7 +85,7 @@ app.get('/api/brands', (req, response) => {
 app.post('/api/item', (req, res) => {
     const newItem = req.body;
     // newIssue.created = new Date();
-    if(!newItem.purchaseDate) {
+    if (!newItem.purchaseDate) {
         newItem.purchaseDate = new Date();
     }
 
@@ -98,15 +97,16 @@ app.post('/api/item', (req, res) => {
         return;
     }
 
-    console.log(newItem)
-
     db.collection('items').insertOne(newItem)
     .then((dbRes) => {
-        res.status(200).json({message: `new item has been added into the db.`})
+        res.status(200).json({
+            message: 'new item has been added into the db.',
+            body: dbRes.ops[0],
+        });
     })
     .catch((dbErr) => {
         dbErr.status(500).json({ message: `Internal Server Error: ${error}`});
-    })
+    });
 });
 
 app.post('/api/add-brand-name', (req, res) => {
@@ -115,8 +115,11 @@ app.post('/api/add-brand-name', (req, res) => {
 
     db.collection('brands').insertOne(newBrandName)
     .then((dbRes) => {
-        // console.log(dbRes);
-        res.status(200).json({message: `new brand name has been added into the db.`})
+        console.log(dbRes);
+        res.status(200).json({
+            message: 'new brand name has been added into the db.',
+            body: dbRes,
+        });
     })
     .catch((error) => {
         console.log(error);

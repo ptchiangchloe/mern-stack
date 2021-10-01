@@ -6,10 +6,8 @@ import DeleteItem from './DeleteItem';
 import { categories, colors, sizes } from '../ItemMeta';
 
 const ItemRow = ({ item, deleteItem }) => {
-    const categoryKey = item.category.toLowerCase();
-    const colorKey = item.color.toLowerCase();
-
-    console.log(item);
+    const categoryKey = item.category ? item.category.toLowerCase() : '';
+    const colorKey = item.color ? item.color.toLowerCase() : '';
 
     return (
         <tr>
