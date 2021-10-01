@@ -14,9 +14,11 @@ const dbPassword = mongoAltas.password
 const dbName = mongoAltas.name
 const uri = `mongodb+srv://${dbUser}:${dbPassword}@mern.9djbj.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
+// This should be named as routes?
+
 MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then( client => {
-        db = client.db("closet");
+    .then((client) => {
+        db = client.db('closet');
         app.listen(4000, () => {
             console.log("App started on port 4000");
         })
@@ -68,9 +70,9 @@ app.get('/api/items/:id', (req, res) => {
 
 app.get('/api/brands', (req, response) => {
     db.collection('brands').find().toArray().then((brandsRawData) => {
-        let res = [];
-        for (let i = 0; i<brandsRawData.length; i++){
-            if('brand-name' in brandsRawData[i]) {
+        const res = [];
+        for (let i = 0; i < brandsRawData.length; i++) {
+            if ('brand-name' in brandsRawData[i]) {
                 res.push(brandsRawData[i]['brand-name']);
             }
         }
@@ -139,7 +141,6 @@ app.put('/api/items/:id', (req, res) => {
     }
 
     const item = req.body;
-    console.log(req)
     // The reason we need to delete the item._id is because performing an update on the 
     // path '_id' would modify the immutable field '_id'
     delete item._id;
