@@ -28,7 +28,7 @@ export default class CreateItem extends React.Component{
 
     handleClick(e) {
         console.log("show modal.");
-        document.getElementById('create-modal').style.display = "block";
+        // document.getElementById('create-modal').modal('show');
     }
 
     handleSubmit(e) {
@@ -47,6 +47,10 @@ export default class CreateItem extends React.Component{
             purchaseDate: purchaseDate.value,
             note: note.value
         });
+
+        // Via Javascript from Bootstrap. 
+        $('#create-modal').modal('hide');
+
         // clear the form for the next input
         // todo: add an alert to indicate the result of the action.
         brand.value = '';
