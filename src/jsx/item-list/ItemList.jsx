@@ -34,9 +34,6 @@ export default class ItemList extends React.Component {
         const { location } = this.props;
         const oldQuery = prevProps.location.search;
         const newQuery = location.search;
-        if(prevState.items !== this.state.items) {
-            this.loadData();
-        }
 
         if (oldQuery === newQuery) {
             return;
@@ -115,6 +112,8 @@ export default class ItemList extends React.Component {
         .then((response) => {
             if (!response.ok) {
                 alert('Failed to delete issue');
+            } else {
+                this.loadData();
             }
         });
     }
