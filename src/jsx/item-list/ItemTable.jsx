@@ -4,7 +4,7 @@ import '../../scss/ItemTable.scss';
 
 const itemListHeader = ['ID', 'BRAND', 'CATEGORY', 'COLOR', 'SIZE', 'PURCHASE DATE', 'NOTE', '']
 
-const ItemTable = ({ items }) => (
+const ItemTable = ({ items, deleteItem }) => (
     <div className="itemlist-container">
         <table className="table">
             <thead>
@@ -20,7 +20,7 @@ const ItemTable = ({ items }) => (
             </thead>
             <tbody>
                 {
-                    items.map((item) => <ItemRow key={item._id} item={item} />)
+                    items.map((item) => <ItemRow key={item._id} item={item} deleteItem={deleteItem} />)
                 }
             </tbody>
         </table>

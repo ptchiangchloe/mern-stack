@@ -1,12 +1,15 @@
 /* eslint-disable react/prop-types */
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import DeleteItem from './DeleteItem';
 
 import { categories, colors, sizes } from '../ItemMeta';
 
-const ItemRow = ({ item }) => {
+const ItemRow = ({ item, deleteItem }) => {
     const categoryKey = item.category.toLowerCase();
     const colorKey = item.color.toLowerCase();
+
+    console.log(item);
 
     return (
         <tr>
@@ -22,9 +25,7 @@ const ItemRow = ({ item }) => {
             <td>{item.purchaseDate}</td>
             <td>{item.note}</td>
             <td>
-                <button size="sm" type="button">
-                    <span className="fa fa-trash" aria-hidden="true" />
-                </button>
+                <DeleteItem deleteItem={deleteItem} itemId={item._id} />
             </td>
         </tr>
     );

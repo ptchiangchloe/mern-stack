@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+/* eslint-disable class-methods-use-this */
 import * as React from 'react';
 import 'whatwg-fetch';
 import debug from 'debug';
@@ -10,16 +12,16 @@ const log = debug('app:issueList');
 export default class ItemList extends React.Component {
     constructor() {
         super();
-        this.state = { 
+        this.state = {
             items: [],
             brands: []
         };
 
         this.createItem = this.createItem.bind(this);
         this.setFilter = this.setFilter.bind(this);
-        this.deleteIssue = this.deleteIssue.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
         this.fetchBrandData = this.fetchBrandData.bind(this);
-
+        this.loadData = this.loadData.bind(this);
     }
 
     componentDidMount() {
@@ -27,14 +29,18 @@ export default class ItemList extends React.Component {
         this.fetchBrandData();
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
+        console.log(this.state.items);
         const { location } = this.props;
         const oldQuery = prevProps.location.search;
         const newQuery = location.search;
+        if(prevState.items !== this.state.items) {
+            this.loadData();
+        }
+
         if (oldQuery === newQuery) {
             return;
         }
-        this.loadData();
     }
 
     setFilter(query) {
@@ -50,8 +56,8 @@ export default class ItemList extends React.Component {
                 res.json().then((data) => {
                     this.setState({
                         brands: data['brands']
-                    })
-                })
+                    });
+                });
             } else {
                 res.json().then((err) => {
                     alert(`Failed to fetch issues: ${err.message}`);
@@ -65,9 +71,6 @@ export default class ItemList extends React.Component {
             if (response.ok) {
                 response.json().then((data) => {
                     log(`Total count of records: ${data._metadata.total_count}`);
-                    data.records.forEach((item) => {
-                        
-                    });
                     this.setState({ items: data.records });
                 });
             } else {
@@ -105,14 +108,15 @@ export default class ItemList extends React.Component {
         }).catch((err) => { alert(`Failed in sending data to server: ${err.message}`); });
     }
 
-    deleteIssue(id) {
-        fetch(`/api/issues/${id}`, {
+    deleteItem(id) {
+        fetch(`/api/items/${id}`, {
             method: 'DELETE',
         })
-            .then((response) => {
-                if (!response.ok) alert('Failed to delete issue');
-                else this.loadData();
-            });
+        .then((response) => {
+            if (!response.ok) {
+                alert('Failed to delete issue');
+            }
+        });
     }
 
     render() {
@@ -122,6 +126,7 @@ export default class ItemList extends React.Component {
             <div className="container">
                 <ItemTable
                     items={items}
+                    deleteItem={this.deleteItem}
                 />
                 <hr />
                 <CreateItem createItem={this.createItem} brands={this.state.brands}/>

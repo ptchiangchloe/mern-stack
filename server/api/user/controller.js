@@ -1,10 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import { mongoAltas } from '../../../credential';
+
 
 const app = express();
 app.use(bodyParser.json());
 
-import { mongoAltas } from '../../../credential';
 import { MongoClient, ObjectId } from 'mongodb';
 
 let db;
@@ -160,4 +161,33 @@ app.put('/api/items/:id', (req, res) => {
                 });
             });
     });
+});
+
+app.delete('/api/items/:id', (req, res) => {
+    let itemId;
+    try {
+        itemId = new ObjectId(req.params.id);
+    } catch (error) {
+        res.status(422).json({
+            message: `Invalid request: ${error}`,
+        });
+        return;
+    }
+    console.log(itemId);
+
+    db.collection('items').deleteOne({ _id: itemId })
+        .then((deleteResult) => {
+            console.debug(deleteResult);
+            if (deleteResult.result.n === 1) {
+                res.json({
+                    status: 'OK',
+                });
+            } else res.json({ status: 'Warning: object not found' });
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json({
+                message: `Internal Server Error: ${error}`,
+            });
+        });
 });
