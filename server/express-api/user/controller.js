@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import { MongoClient, ObjectId } from 'mongodb';
 
 import { mongoAltas } from '../../../credential';
+import Item from '../../item';
 
 const app = express();
 app.use(bodyParser.json());
@@ -20,17 +21,15 @@ MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((client) => {
         db = client.db('closet');
         app.listen(4000, () => {
-            console.log("App started on port 4000");
-        })
+            console.log('App started on port 4000');
+        });
     })
-    .catch(err => {
-        console.log(err)
+    .catch((err) => {
+        console.log(err);
     // perform actions on the collection object
     // When we leave the page we should close the client? 
     // client.close();
-    })
-
-import Item from '../../item';
+    });
 
 app.get('/api/items', (req, res) => {
     const filter = {};
@@ -77,7 +76,7 @@ app.get('/api/brands', (req, response) => {
             }
         }
 
-        response.json({brands: res})
+        response.json({ brands: res })
     })
     .catch((error) => {
         res.status(500).json({message: `Internal Server Error: ${error}`});
