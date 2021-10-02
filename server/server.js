@@ -7,7 +7,7 @@ import bodyParser from 'body-parser';
 import path from 'path';
 
 // import config from '../webpack.config';
-import './express-api/user/controller';
+import './express-api/user/routes';
 
 SourceMapSupport.install();
 
