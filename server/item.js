@@ -6,7 +6,7 @@ const itemFieldType = {
     note: 'optional',
     price: 'optional',
     purchaseDate: 'optional',
-}
+};
 
 // check all the request body's each property's value has correct data type.
 // dates have to be proper dates
@@ -35,7 +35,7 @@ function validateItem(item) {
 
 function cleanupItem(item) {
     const cleanedUpItem = {};
-    Object.keys(items).forEach((field) => {
+    Object.keys(item).forEach((field) => {
         // we use this condition to filter out all the unwanted properties to prepare 
         // the object for database injection
         if (itemFieldType[field]) cleanedUpItem[field] = item[field];
@@ -44,7 +44,7 @@ function cleanupItem(item) {
 }
 
 function convertIssue(item) {
-    return cleanupIssue(item);
+    return cleanupItem(item);
 }
 
 export default { validateItem, convertIssue, cleanupItem };

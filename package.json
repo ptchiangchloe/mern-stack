@@ -1,7 +1,7 @@
 {
   "name": "pro-mern-stack",
   "version": "1.0.0",
-  "description": "This is a pro mern(mongoDB|express.js|react.js|node.js stack application",
+  "description": "This is a pro mern(mongoDB|express.js|react.js|node.js) stack application",
   "main": "index.js",
   "repository": {
     "type": "git"

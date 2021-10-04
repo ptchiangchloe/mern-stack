@@ -10,12 +10,10 @@ const app = express();
 app.use(bodyParser.json());
 
 let db;
-const dbUser = mongoAltas.user
-const dbPassword = mongoAltas.password
-const dbName = mongoAltas.name
+const dbUser = mongoAltas.user;
+const dbPassword = mongoAltas.password;
+const dbName = mongoAltas.name;
 const uri = `mongodb+srv://${dbUser}:${dbPassword}@mern.9djbj.mongodb.net/${dbName}?retryWrites=true&w=majority`;
-
-// This should be named as routes?
 
 MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((client) => {
