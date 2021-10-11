@@ -3,11 +3,16 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient, ObjectId } from 'mongodb';
 
-import { mongoAltas } from '../../../credential';
-import Item from '../../item';
+import { mongoAltas } from '../../credential';
+import Item from '../item';
+
+const logger = require('../logger');
 
 const app = express();
+// req => middleware => res
+
 app.use(bodyParser.json());
+app.use(logger);
 
 let db;
 const dbUser = mongoAltas.user;
