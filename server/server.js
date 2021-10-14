@@ -42,11 +42,13 @@ app.listen(4000, () => {
     console.log('App started on port 4000');
 });
 
-//Require the Router we defined in movies.js
+//Require the Router we defined in item.js
 var item = require('./routes/item.js');
+//Require the Router we defined in brand.js
+var brand = require('./routes/brand.js');
 
-//Use the Router on the sub route /movies
 app.use('/', item);
+app.use('/', brand);
 
 // app.use(express.static('static'));
 // The argument to the static() function is the directory where  the middleware should look for the files.

@@ -5,9 +5,12 @@ import { ItemCategoryForm } from './ItemCategoryForm';
 import { ItemColorForm } from './ItemColorForm';
 import { ItemSizeForm } from './ItemSizeForm';
 
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+
 export default class ItemEditForm extends React.Component {
     render() {
-        let {handleSubmit, handleChange, item} = this.props
+        let {handleSubmit, handleChange, item} = this.props;
 
         return (
             <div className="form-container">
@@ -22,17 +25,20 @@ export default class ItemEditForm extends React.Component {
                     <ItemCategoryForm handleChange={handleChange} />
                     <ItemColorForm handleChange={handleChange} item={item}/>
                     <ItemSizeForm handleChange={handleChange} item={item}/>
-                    PURCHASE DATE:
-                    <DateInput
-                        name="completionDate"
-                        value={item.purchaseDate}
-                        size={40}
-                    />
-                    <br />
-                    NOTE:
-                    {item.note}
-                    <br />
-
+                    <div className="form-group">
+                        <label htmlFor="category-select">Purchase Date</label>
+                        <DatePicker type="text" name="purchaseDate" 
+                            selected={item.purchaseDate}
+                            onChange={this.setTargetDate} 
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="category-select">Note</label>
+                        <textarea className="form-control" 
+                        type="text" name="note" value={item.note}
+                        rows="3"/>
+                    </div>
                     <button type="submit">Submit</button>
                     <Link to="/issues">Back to item list</Link>
                 </form>
