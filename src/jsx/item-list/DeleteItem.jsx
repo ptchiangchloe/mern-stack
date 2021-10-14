@@ -1,11 +1,6 @@
 import React from 'react';
 
 class DeleteItem extends React.Component {
-
-    constructor() {
-        super();
-    }
-
     render() {
         return (
             <button size="sm" type="button" onClick={() => this.props.deleteItem(this.props.itemId)}>

@@ -71,7 +71,7 @@ export default class ItemEdit extends React.Component { // eslint-disable-line
             return;
         }
 
-        fetch(`/api/items/${this.props.match.params.id}`, {
+        fetch(`/api/item/${this.props.match.params.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export default class ItemEdit extends React.Component { // eslint-disable-line
         const { item } = this.state;
 
         return (
-            <div class="edit-item-container">
+            <div className="edit-item-container">
                 <ItemEditForm 
                     item = {item}
                     handleSubmit={this.handleSubmit} 

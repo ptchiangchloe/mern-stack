@@ -2,7 +2,7 @@
 const Item = require('../models/item');
 import { ObjectId } from 'mongodb';
 
-exports.item_list = function(req, res) {
+exports.itemList = function(req, res) {
     // GET all the items. 
     Item.find({}, (err, items)=>{
         if (err){
@@ -53,4 +53,28 @@ exports.add_item = function(req, res) {
         if(err) return res.json({Error: err});
         return res.json(data);
     })
-};
+}
+
+exports.updateItem = function(req, res) {
+    let itemId;
+    try {
+        itemId = new ObjectId(req.params.id);
+    } catch (error) {
+        res.status(422).json({
+            message: `Invalid issue ID format: ${error}`,
+        });
+        return;
+    }
+    console.log(itemId)
+
+    const item = req.body;
+
+    Item.updateOne(
+        {_id: itemId},
+        {item: item},
+        function(err, updateItem) {
+            if(err) return res.json({Error: err});
+            return res.json(updateItem);
+        }
+    )
+}
