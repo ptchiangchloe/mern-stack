@@ -8,10 +8,6 @@ import bodyParser from 'body-parser';
 import path from 'path';
 
 // import config from '../webpack.config';
-// require('./express-api/routes');
-require('./user.js');
-
-const logger = require('./logger');
 // // import mongoose
 import mongoose from 'mongoose';
 

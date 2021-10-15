@@ -4,6 +4,7 @@ import DateInput from '../DateInput';
 import { ItemCategoryForm } from './ItemCategoryForm';
 import { ItemColorForm } from './ItemColorForm';
 import { ItemSizeForm } from './ItemSizeForm';
+import { ItemBrandForm } from '../shared/ItemBrandForm';
 
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -18,10 +19,10 @@ export default class ItemEditForm extends React.Component {
                     <div className="form-group">
                         <label>ID: {item._id}</label>
                     </div>
-                    <div className="form-group">
-                        <label>BRAND</label>
-                        <input type="text" className="form-control" id="brand" onChange={handleChange} value={item.brand}></input>
-                    </div>
+                    <ItemBrandForm 
+                        targetBrand={item.brand}
+                        handleChange={this.handleChange}
+                    />
                     <ItemCategoryForm handleChange={handleChange} />
                     <ItemColorForm handleChange={handleChange} item={item}/>
                     <ItemSizeForm handleChange={handleChange} item={item}/>

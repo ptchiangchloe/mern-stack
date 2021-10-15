@@ -19,12 +19,10 @@ export default class ItemList extends React.Component {
 
         this.createItem = this.createItem.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
-        this.fetchBrandData = this.fetchBrandData.bind(this);
     }
 
     componentDidMount() {
         this.loadItemsData();
-        this.fetchBrandData();
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -36,22 +34,6 @@ export default class ItemList extends React.Component {
         if (oldQuery === newQuery) {
             return;
         }
-    }
-
-    fetchBrandData() {
-        fetch('/api/brands').then((res) => {
-            if(res.ok) {
-                res.json().then((data) => {
-                    this.setState({
-                        brands: data['brands']
-                    });
-                });
-            } else {
-                res.json().then((err) => {
-                    alert(`Failed to fetch issues: ${err.message}`);
-                })
-            }
-        });
     }
 
     loadItemsData() {
@@ -121,9 +103,8 @@ export default class ItemList extends React.Component {
                 <hr />
                 <CreateItem
                     createItem={this.createItem}
-                    brands={brands}
                 />
-                <CreateBrandLabel updateBrandData={this.fetchBrandData} />
+                <CreateBrandLabel/>
             </div>
         );
     }

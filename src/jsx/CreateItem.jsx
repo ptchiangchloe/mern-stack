@@ -6,20 +6,19 @@ import {
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import '../scss/CreateItem.scss';
+import { ItemBrandForm } from './shared/ItemBrandForm';
 
 export default class CreateItem extends React.Component{
     constructor(props) {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     state = {
-        targetDate: ''
-    }
-
-    componentDidMount() {
-
+        targetDate: '',
+        targetBrand: ''
     }
 
     componentDidUpdate() {
@@ -64,12 +63,20 @@ export default class CreateItem extends React.Component{
         this.setState({
             targetDate: e
         })
-        console.log(this.state.targetDate)
+    }
+
+    setBrandName = (e) => {
+        this.setState({
+            targetBrand: e
+        })
+    }
+
+    handleChange() {
+
     }
 
     render() {
-        const {targetDate} = this.state;
-        const {brands} = this.props;
+        const {targetDate, targetBrand} = this.state;
         console.log(targetDate)
         return (
             <div className="modal-container">
@@ -89,17 +96,10 @@ export default class CreateItem extends React.Component{
                             </div>
                             <div className="modal-body">
                                 <form name="itemAdding" onSubmit={this.handleSubmit}>
-                                    <div className="form-group">
-                                        <label htmlFor="brand-select">Brand</label>
-                                        <select className="form-control" name="brand" id="brand-select">
-                                            <option key={0}></option>
-                                            {
-                                                Object.entries(brands).map((item, index) => 
-                                                    <option key={index+1}>{item[1]}</option>
-                                                )
-                                            }
-                                        </select>
-                                    </div>
+                                    <ItemBrandForm 
+                                        targetBrand={targetBrand}
+                                        handleChange={this.handleChange}
+                                    />
                                     <div className="form-group">
                                         <label htmlFor="category-select">Category</label>
                                         <select className="form-control" name="category" id="category-select">
