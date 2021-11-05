@@ -1,5 +1,6 @@
 import React from 'react';
 import ItemEditForm from './ItemEditForm';
+import '../../scss/EditItem.scss';
 
 export default class ItemEdit extends React.Component { // eslint-disable-line
     constructor(props) {
@@ -30,12 +31,13 @@ export default class ItemEdit extends React.Component { // eslint-disable-line
     }
 
     loadData() {
-        fetch(`/api/items/${this.props.match.params.id}`)
+        fetch(`/api/item/${this.props.match.params.id}`)
             .then((response) => {
                 if (response.ok) {
                     response.json().then((item) => {
-                        item.purchaseDate = item.purchaseDate != null ? new Date(item.purchaseDate) : null;
-                        this.setState({ item });
+                        console.log(item[0].purchaseDate);
+                        item[0].purchaseDate = item[0].purchaseDate !== null ? new Date(item[0].purchaseDate) : null;
+                        this.setState({ item: item[0] });
                     });
                 } else {
                     response.json().then((error) => {
@@ -69,7 +71,7 @@ export default class ItemEdit extends React.Component { // eslint-disable-line
             return;
         }
 
-        fetch(`/api/items/${this.props.match.params.id}`, {
+        fetch(`/api/item/${this.props.match.params.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -98,7 +100,7 @@ export default class ItemEdit extends React.Component { // eslint-disable-line
         const { item } = this.state;
 
         return (
-            <div>
+            <div className="edit-item-container">
                 <ItemEditForm 
                     item = {item}
                     handleSubmit={this.handleSubmit} 

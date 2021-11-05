@@ -4,10 +4,14 @@ import DateInput from '../DateInput';
 import { ItemCategoryForm } from './ItemCategoryForm';
 import { ItemColorForm } from './ItemColorForm';
 import { ItemSizeForm } from './ItemSizeForm';
+import { ItemBrandForm } from '../shared/ItemBrandForm';
+
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 export default class ItemEditForm extends React.Component {
     render() {
-        let {handleSubmit, handleChange, item} = this.props
+        let {handleSubmit, handleChange, item} = this.props;
 
         return (
             <div className="form-container">
@@ -15,24 +19,27 @@ export default class ItemEditForm extends React.Component {
                     <div className="form-group">
                         <label>ID: {item._id}</label>
                     </div>
-                    <div className="form-group">
-                        <label>BRAND</label>
-                        <input type="text" className="form-control" id="brand" onChange={handleChange} value={item.brand}></input>
-                    </div>
+                    <ItemBrandForm 
+                        targetBrand={item.brand}
+                        handleChange={this.handleChange}
+                    />
                     <ItemCategoryForm handleChange={handleChange} />
                     <ItemColorForm handleChange={handleChange} item={item}/>
                     <ItemSizeForm handleChange={handleChange} item={item}/>
-                    PURCHASE DATE:
-                    <DateInput
-                        name="completionDate"
-                        value={item.purchaseDate}
-                        size={40}
-                    />
-                    <br />
-                    NOTE:
-                    {item.note}
-                    <br />
-
+                    <div className="form-group">
+                        <label htmlFor="category-select">Purchase Date</label>
+                        <DatePicker type="text" name="purchaseDate" 
+                            selected={item.purchaseDate}
+                            onChange={this.setTargetDate} 
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="category-select">Note</label>
+                        <textarea className="form-control" 
+                        type="text" name="note" value={item.note}
+                        rows="3"/>
+                    </div>
                     <button type="submit">Submit</button>
                     <Link to="/issues">Back to item list</Link>
                 </form>
