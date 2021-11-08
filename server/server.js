@@ -7,6 +7,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 
+const cluster = require('cluster');
+const os = require('os');
+
+const numCpu = os.cpus().length;
+
 // import config from '../webpack.config';
 // // import mongoose
 import mongoose from 'mongoose';
@@ -34,9 +39,9 @@ mongoose.connect(
     }
 )
 
-app.listen(4000, () => {
-    console.log('App started on port 4000');
-});
+// app.listen(4000, () => {
+//     console.log('App started on port 4000');
+// });
 
 //Require the Router we defined in item.js
 var item = require('./routes/item.js');
@@ -45,6 +50,20 @@ var brand = require('./routes/brand.js');
 
 app.use('/', item);
 app.use('/', brand);
+
+// cluster module use the round robin approach that is 
+// the first request would be handled by one processor
+// the second request would be handled by a differnt processor 
+
+if(cluster.isMaster) {
+    for(let i=0; i<numCpu; i++) {
+        cluster.fork();
+    }
+} else {
+    app.listen(4000, () => {
+        console.log(`server ${process.pid} @http://localhost:8000`)
+    })
+}
 
 // app.use(express.static('static'));
 // The argument to the static() function is the directory where  the middleware should look for the files.
