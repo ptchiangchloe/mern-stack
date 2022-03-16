@@ -21,7 +21,7 @@ export default class ItemEditForm extends React.Component {
                     </div>
                     <ItemBrandForm 
                         targetBrand={item.brand}
-                        handleChange={this.handleChange}
+                        handleChange={handleChange}
                     />
                     <ItemCategoryForm handleChange={handleChange} />
                     <ItemColorForm handleChange={handleChange} item={item}/>

@@ -65,13 +65,15 @@ exports.updateItem = function(req, res) {
         });
         return;
     }
-    console.log(itemId)
 
     const item = req.body;
+    console.log(item);
+
+    const {brand, color, category, size, purchaseDate, note} = item
 
     Item.updateOne(
         {_id: itemId},
-        {item: item},
+        { brand, color, category, size, purchaseDate, note },
         function(err, updateItem) {
             if(err) return res.json({Error: err});
             return res.json(updateItem);

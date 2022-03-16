@@ -1,22 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-export class ItemBrandForm extends React.Component {
-    state = {
-        brands: []
-    }
+export function ItemBrandForm(props)  {
+    const [brands, setBrands] = useState([])
 
-    componentDidMount() {
-        this.loadBrandName();
-    }
+    useEffect(() => {
+        loadBrandName();
+    }, [])
 
-    loadBrandName() {
+    function loadBrandName() {
         fetch('/api/brands').then((res) => {
             if(res.ok) {
                 res.json().then((data) => {
                     data['brands'].unshift(' ')
-                    this.setState({
-                        brands: data['brands']
-                    });
+                    setBrands(data['brands'])
                 });
             } else {
                 res.json().then((err) => {
@@ -26,24 +22,22 @@ export class ItemBrandForm extends React.Component {
         });
     }
 
-    render() {
-        const { brands } = this.state;
-        const { handleChange, targetBrand } = this.props;
+    const { handleChange, targetBrand } = props;
+    console.log(handleChange)
 
-        return (
-            <div className="form-group" onChange={() => handleChange}>
-                <label>Brand:</label>
-                <option value=""></option>
-                <select id="brand" className="form-control">
-                    {
-                        brands.map((brand) => {
-                            return (
-                                <option value={brand} selected={targetBrand === brand}>{brand}</option>
-                            )
-                        })
-                    }          
-                </select>
-            </div>
-        )
-    }
+    return (
+        <div className="form-group" >
+            <label>Brand:</label>
+            <select id="brand" className="form-control" onChange={handleChange}>
+                {
+                    brands.map((brand) => {
+                        return (
+                            <option value={brand} selected={targetBrand === brand}>{brand}</option>
+                        )
+                    })
+                }          
+            </select>
+        </div>
+    )
+    
 }

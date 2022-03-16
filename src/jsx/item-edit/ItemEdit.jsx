@@ -51,7 +51,7 @@ export default class ItemEdit extends React.Component { // eslint-disable-line
     }
 
     handleChange = (e) => {
-        console.log(e.target.id);
+        console.log(e);
         let updatedItem = Object.assign({}, this.state.item);
 
         updatedItem[e.target.id] = e.target.value
@@ -65,7 +65,7 @@ export default class ItemEdit extends React.Component { // eslint-disable-line
     handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(this.state.item.size)
+        console.log(this.state.item)
 
         if (Object.keys(this.state.invalidFields).length !== 0) {
             return;
