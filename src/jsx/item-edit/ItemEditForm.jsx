@@ -37,7 +37,7 @@ export default class ItemEditForm extends React.Component {
                     <div className="form-group">
                         <label htmlFor="category-select">Note</label>
                         <textarea className="form-control" 
-                        type="text" name="note" value={item.note}
+                        type="text" name="note" value={item.note} onChange={handleChange} 
                         rows="3"/>
                     </div>
                     <button type="submit">Submit</button>

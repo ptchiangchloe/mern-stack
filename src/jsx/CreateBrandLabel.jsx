@@ -11,7 +11,6 @@ export default class CreateBrandLabel extends React.Component {
         this.setState({
             brand: event.target.value
         })
-        // console.log(this.state.brand)
     }
 
     // Turn string into title cased. 
@@ -47,7 +46,7 @@ export default class CreateBrandLabel extends React.Component {
 
         console.log(brandJsonFormat)
 
-        fetch('/api/add-brand-name', {
+        fetch('/api/add_brand', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
