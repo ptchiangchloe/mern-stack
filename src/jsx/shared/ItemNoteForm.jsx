@@ -8,7 +8,7 @@ export const ItemNoteForm = (props) => {
             <textarea 
                 className="form-control" 
                 type="text" 
-                name="note" 
+                id="note" 
                 value={note} 
                 onChange={handleChange} 
                 rows="3"

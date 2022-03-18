@@ -52,7 +52,7 @@ export default class ItemEdit extends React.Component { // eslint-disable-line
 
     handleChange = (e) => {
         let updatedItem = Object.assign({}, this.state.item);
-        updatedItem[e.target.name] = e.target.value
+        updatedItem[e.target.id] = e.target.value
 
         this.setState({
             item: updatedItem

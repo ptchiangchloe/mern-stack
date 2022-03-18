@@ -22,7 +22,7 @@ export function ItemBrandForm(props)  {
         });
     }
 
-    const { handleChange, targetBrand } = props;
+    const { handleChange, selectedBrand } = props;
 
     return (
         <div className="form-group" >
@@ -31,7 +31,7 @@ export function ItemBrandForm(props)  {
                 {
                     brands.map((brand) => {
                         return (
-                            <option value={brand} selected={targetBrand === brand}>{brand}</option>
+                            <option value={brand} selected={selectedBrand === brand}>{brand}</option>
                         )
                     })
                 }          
