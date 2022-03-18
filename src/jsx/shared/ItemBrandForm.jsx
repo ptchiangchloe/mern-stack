@@ -23,7 +23,6 @@ export function ItemBrandForm(props)  {
     }
 
     const { handleChange, targetBrand } = props;
-    console.log(handleChange)
 
     return (
         <div className="form-group" >

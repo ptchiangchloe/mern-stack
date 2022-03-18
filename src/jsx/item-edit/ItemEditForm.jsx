@@ -2,16 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import DateInput from '../DateInput';
 import { ItemCategoryForm } from './ItemCategoryForm';
-import { ItemColorForm } from './ItemColorForm';
+import { ItemColorForm } from '../shared/ItemColorForm';
 import { ItemSizeForm } from '../shared/ItemSizeForm';
 import { ItemBrandForm } from '../shared/ItemBrandForm';
+import { ItemNoteForm } from '../shared/ItemNoteForm';
 
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
 export default class ItemEditForm extends React.Component {
     render() {
-        let {handleSubmit, handleChange, item} = this.props;
+        let { handleSubmit, handleChange, item } = this.props;
 
         return (
             <div className="form-container">
@@ -24,7 +25,7 @@ export default class ItemEditForm extends React.Component {
                         handleChange={handleChange}
                     />
                     <ItemCategoryForm handleChange={handleChange} />
-                    <ItemColorForm handleChange={handleChange} item={item}/>
+                    <ItemColorForm handleChange={handleChange} selectedColor={item.color}/>
                     <ItemSizeForm handleChange={handleChange} selectedSize={item.size}/>
                     <div className="form-group">
                         <label htmlFor="category-select">Purchase Date</label>
@@ -34,12 +35,10 @@ export default class ItemEditForm extends React.Component {
                             className="form-control"
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="category-select">Note</label>
-                        <textarea className="form-control" 
-                        type="text" name="note" value={item.note} onChange={handleChange} 
-                        rows="3"/>
-                    </div>
+                    <ItemNoteForm 
+                        note={item.note}
+                        handleChange={handleChange}
+                    />
                     <button type="submit">Submit</button>
                     <Link to="/issues">Back to item list</Link>
                 </form>
