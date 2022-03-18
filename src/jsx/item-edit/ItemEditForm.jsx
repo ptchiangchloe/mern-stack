@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import DateInput from '../DateInput';
 import { ItemCategoryForm } from './ItemCategoryForm';
 import { ItemColorForm } from './ItemColorForm';
-import { ItemSizeForm } from './ItemSizeForm';
+import { ItemSizeForm } from '../shared/ItemSizeForm';
 import { ItemBrandForm } from '../shared/ItemBrandForm';
 
 import DatePicker from 'react-datepicker';
@@ -25,7 +25,7 @@ export default class ItemEditForm extends React.Component {
                     />
                     <ItemCategoryForm handleChange={handleChange} />
                     <ItemColorForm handleChange={handleChange} item={item}/>
-                    <ItemSizeForm handleChange={handleChange} item={item}/>
+                    <ItemSizeForm handleChange={handleChange} selectedSize={item.size}/>
                     <div className="form-group">
                         <label htmlFor="category-select">Purchase Date</label>
                         <DatePicker type="text" name="purchaseDate" 

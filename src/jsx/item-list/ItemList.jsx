@@ -4,7 +4,7 @@ import * as React from 'react';
 import 'whatwg-fetch';
 import debug from 'debug';
 import ItemTable from './ItemTable';
-import CreateItem from '../CreateItem';
+import CreateItem from '../item-create/CreateItem';
 import CreateBrandLabel from '../CreateBrandLabel';
 
 const log = debug('app:issueList');

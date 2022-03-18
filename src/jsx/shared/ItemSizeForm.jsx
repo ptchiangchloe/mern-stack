@@ -10,7 +10,7 @@ export const ItemSizeForm = (props) => {
                 {
                     Object.keys(sizes).map((size) => {
                         return (
-                            <option value={size} key={createRandomID()} selected={props.item.size === size}>
+                            <option value={size} key={createRandomID()} selected={props.selectedSize === size}>
                                 {sizes[size]}
                             </option>
                         )

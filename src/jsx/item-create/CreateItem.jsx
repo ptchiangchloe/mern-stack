@@ -2,11 +2,12 @@ import React from 'react';
 import { 
     categories as categoriesForSelections,
     colors as colorsForSelections 
-} from './ItemMeta';
+} from '../ItemMeta';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import '../scss/CreateItem.scss';
-import { ItemBrandForm } from './shared/ItemBrandForm';
+import '../../scss/CreateItem.scss';
+import { ItemBrandForm } from '../shared/ItemBrandForm';
+import { ItemSizeForm } from '../shared/ItemSizeForm';
 
 export default class CreateItem extends React.Component{
     constructor(props) {
@@ -122,6 +123,7 @@ export default class CreateItem extends React.Component{
                                             }
                                         </select>
                                     </div>
+                                    <ItemSizeForm handleChange={this.handleChange} selectedSize={'S'}/>
                                     <div className="form-group">
                                         <label htmlFor="category-select">Purchase Date</label>
                                         <DatePicker type="text" name="purchaseDate" 
