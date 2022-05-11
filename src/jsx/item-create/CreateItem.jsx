@@ -13,8 +13,6 @@ export default class CreateItem extends React.Component{
     constructor(props) {
         super();
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
     state = {
@@ -22,22 +20,13 @@ export default class CreateItem extends React.Component{
         targetBrand: ''
     }
 
-    componentDidUpdate() {
-        console.log('createItem component updates.')
-    }
-
-    handleClick(e) {
-        console.log("show modal.");
-        // document.getElementById('create-modal').modal('show');
-    }
-
     handleSubmit(e) {
         e.preventDefault();
 
         const { createItem } = this.props;
         const forms = document.forms
+        // access create item form inputs. 
         const form = forms.itemAdding;
-
         const {brand, category, color, purchaseDate, note} = form;
 
         createItem({
@@ -72,19 +61,20 @@ export default class CreateItem extends React.Component{
         })
     }
 
-    handleChange() {
-
-    }
-
     render() {
         const {targetDate, targetBrand} = this.state;
         console.log(targetDate)
         return (
             <div className="modal-container">
                 <div>
-                    <button className="btn btn-primary" type="button" data-toggle="modal"
-                        onClick={this.handleClick} data-target="#create-modal"
-                    >Create a new Item</button>
+                    <button 
+                        className="btn btn-primary" 
+                        type="button" 
+                        data-toggle="modal" 
+                        data-target="#create-modal"
+                    >
+                        Create a new Item
+                    </button>
                 </div>
                 <div className="modal fade" tabIndex="-1" role="dialog" id="create-modal">
                     <div className="modal-dialog">

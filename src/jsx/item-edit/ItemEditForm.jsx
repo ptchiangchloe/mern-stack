@@ -10,7 +10,7 @@ import { ItemDateForm } from '../shared/ItemDateForm';
 
 export default class ItemEditForm extends React.Component {
     render() {
-        let { handleSubmit, handleChange, item } = this.props;
+        let { handleSubmit, handleChange, handleDateChange, item } = this.props;
 
         return (
             <div className="form-container">
@@ -18,12 +18,12 @@ export default class ItemEditForm extends React.Component {
                     <div className="form-group">
                         <label>ID: {item._id}</label>
                     </div>
-                    <ItemBrandForm selectedBrand={item.brand} handleChange={handleChange} />
+                    <ItemBrandForm handleChange={handleChange} selectedBrand={item.brand} />
                     <ItemCategoryForm handleChange={handleChange} selectedCategory={item.category} />
                     <ItemColorForm handleChange={handleChange} selectedColor={item.color} />
                     <ItemSizeForm handleChange={handleChange} selectedSize={item.size} />
-                    <ItemDateForm selectedDate={item.purchaseDate} />
-                    <ItemNoteForm note={item.note} handleChange={handleChange} />
+                    <ItemDateForm handleChange={handleDateChange} selectedDate={item.purchaseDate} />
+                    <ItemNoteForm handleChange={handleChange} note={item.note} />
                     <button type="submit">Submit</button>
                     <Link to="/issues">Back to item list</Link>
                 </form>

@@ -29,14 +29,13 @@ export function ItemBrandForm(props)  {
             <label>Brand:</label>
             <select id="brand" className="form-control" onChange={handleChange}>
                 {
-                    brands.map((brand) => {
+                    brands.map((brand, idx) => {
                         return (
-                            <option value={brand} selected={selectedBrand === brand}>{brand}</option>
+                            <option value={brand} key={idx} selected={selectedBrand === brand}>{brand}</option>
                         )
                     })
                 }          
             </select>
         </div>
     )
-    
 }

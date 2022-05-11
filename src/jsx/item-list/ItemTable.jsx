@@ -20,7 +20,11 @@ const ItemTable = ({ items, deleteItem }) => (
             </thead>
             <tbody>
                 {
-                    items.map((item) => <ItemRow key={item._id} item={item} deleteItem={deleteItem} />)
+                    items.map((item) => {
+                        console.log(item)
+                        return (<ItemRow key={item._id} item={item} deleteItem={deleteItem} />)
+                    }
+                    )
                 }
             </tbody>
         </table>

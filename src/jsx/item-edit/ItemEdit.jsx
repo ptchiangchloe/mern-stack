@@ -50,8 +50,19 @@ export default class ItemEdit extends React.Component { // eslint-disable-line
             });
     }
 
+    handleDateChange = (value) => {
+        let updatedItem = Object.assign({}, this.state.item);
+
+        updatedItem['purchaseDate'] = value;
+
+        this.setState({
+            item: updatedItem
+        })    
+    }
+
     handleChange = (e) => {
         let updatedItem = Object.assign({}, this.state.item);
+
         updatedItem[e.target.id] = e.target.value
 
         this.setState({
@@ -102,6 +113,7 @@ export default class ItemEdit extends React.Component { // eslint-disable-line
                     item = {item}
                     handleSubmit={this.handleSubmit} 
                     handleChange={this.handleChange}
+                    handleDateChange={this.handleDateChange}
                 />
             </div>
         );

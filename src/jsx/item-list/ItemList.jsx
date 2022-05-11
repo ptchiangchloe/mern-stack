@@ -66,9 +66,9 @@ export default class ItemList extends React.Component {
         }).then((response) => {
             log(response);
             if (response.ok) {
-                response.json().then((updatedItem) => {
-                    const newItems = items.concat(updatedItem.body);
-                    this.setState({ items: newItems });
+                response.json().then((newAddedItem) => {
+                    const newItem = items.concat(newAddedItem);
+                    this.setState({ items: newItem });
                 });
             } else {
                 response.json().then((error) => {
