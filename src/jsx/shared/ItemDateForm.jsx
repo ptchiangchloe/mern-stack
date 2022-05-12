@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export const ItemDateForm = (props) => {
     const { selectedDate, handleChange } = props;
+    console.log(selectedDate)
     return (
         <div className="form-group">
             <label htmlFor="category-select">Purchase Date</label>

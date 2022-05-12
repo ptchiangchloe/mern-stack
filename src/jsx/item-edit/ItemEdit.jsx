@@ -87,11 +87,8 @@ export default class ItemEdit extends React.Component { // eslint-disable-line
             body: JSON.stringify(this.state.item),
         }).then((response) => {
             if (response.ok) {
-                response.json().then((updatedItem) => {
-                    if (updatedItem.purchaseDate) {
-                        updatedItem.purchaseDate = new Date(updatedItem.purchaseDate);
-                    }
-                    this.setState({ item: updatedItem });
+                response.json().then((jsonfiedResponse) => {
+                    console.log(jsonfiedResponse)
                     alert('Updated issue successfully.');
                 });
             } else {

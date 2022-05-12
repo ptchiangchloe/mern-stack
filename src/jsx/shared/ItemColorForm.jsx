@@ -8,9 +8,9 @@ export const ItemColorForm = (props) => {
             <label>COLOR:</label>
             <select id="color" className="form-control">
                 {
-                    Object.keys(colors).map((color) => {
+                    Object.keys(colors).map((color, idx) => {
                         return (
-                            <option value={color} selected={selectedColor === color}>{colors[color]}</option>
+                            <option value={color} key={idx} selected={selectedColor === color}>{colors[color]}</option>
                         )
                     })
                 }          

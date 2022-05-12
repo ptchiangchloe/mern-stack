@@ -8,10 +8,10 @@ export const ItemCategoryForm = (props) => {
             <label>CATEGORY:</label>
             <select id="category" className="form-control" onChange={handleChange}>
                 {
-                    Object.keys(categories).map((category) => {
+                    Object.keys(categories).map((category, idx) => {
                         const isSelected = selectedCategory === categories[category];
                         return (
-                            <option value={category} selected={isSelected}>{categories[category]}</option>
+                            <option value={category} key={idx} selected={isSelected}>{categories[category]}</option>
                         )
                     })
                 }          
