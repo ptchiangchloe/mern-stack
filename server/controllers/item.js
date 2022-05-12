@@ -72,16 +72,31 @@ exports.updateItem = function(req, res) {
     const item = req.body;
     console.log(item);
 
+    console.log(item.purchaseDate)
+
+    const decodingPurchaseDate = parseISOString(item.purchaseDate.toString())
+
+    console.log(decodingPurchaseDate)
+
+    // item['purchaseDate'] = formattedPurchaseDate;
+
+    console.log(item)
+
     const {brand, color, category, size, purchaseDate, note} = item
 
     Item.updateOne(
         {_id: itemId},
-        { brand, color, category, size, purchaseDate, note },
+        { brand, color, category, size, purchaseDate: decodingPurchaseDate, note },
         function(err, updateItem) {
             if(err) return res.json({Error: err});
             return res.json(updateItem);
         }
     )
+}
+
+function parseISOString(s) {
+    var b = s.split(/\D+/);
+    return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6])).toLocaleDateString('en-US');
 }
 
 exports.deleteItem = (req, res) => {
