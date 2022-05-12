@@ -12,4 +12,7 @@ router.post('/api/item', item_controller.add_item);
 
 router.put('/api/item/:id', item_controller.updateItem);
 
+router.delete('/api/item/:id', item_controller.deleteItem);
+
+
 module.exports = router;

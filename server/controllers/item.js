@@ -9,6 +9,7 @@ exports.itemList = function(req, res) {
             return res.json({Error: err});
         }
         const metadata = { total_count: items.length };
+        console.log(items[0].purchaseDate)
         res.json({ _metadata: metadata, records: items });
     })
 }
@@ -38,6 +39,8 @@ exports.add_item = function(req, res) {
     if (!reqData.purchaseDate) {
         reqData.purchaseDate = new Date();
     }
+
+    console.log(reqData.purchaseDate)
 
     const newItem = new Item({
         brand: reqData.brand,
@@ -79,4 +82,36 @@ exports.updateItem = function(req, res) {
             return res.json(updateItem);
         }
     )
+}
+
+exports.deleteItem = (req, res) => {
+    let itemId;
+    try {
+        itemId = new ObjectId(req.params.id);
+    } catch (error) {
+        res.status(422).json({
+            message: `Invalid request: ${error}`,
+        });
+        return;
+    }
+    console.log(itemId);
+
+    Item.deleteOne({ _id: itemId })
+        .then((deleteResult) => {
+            console.debug(deleteResult);
+            if (deleteResult.deletedCount === 1) {
+                // Make sure only 1 deletedCount
+                res.json({
+                    status: 'OK',
+                });
+            } else {
+                res.json({ status: 'Warning: object not found' });
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json({
+                message: `Internal Server Error: ${error}`,
+            });
+        });
 }

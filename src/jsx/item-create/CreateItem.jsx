@@ -22,7 +22,6 @@ export default class CreateItem extends React.Component{
 
     handleSubmit(e) {
         e.preventDefault();
-
         const { createItem } = this.props;
         const forms = document.forms
         // access create item form inputs. 
@@ -118,6 +117,7 @@ export default class CreateItem extends React.Component{
                                         <label htmlFor="category-select">Purchase Date</label>
                                         <DatePicker type="text" name="purchaseDate" 
                                             selected={targetDate}
+                                            // By default, JavaScript will use the browser's time zone and display a date as a full text string:
                                             onChange={this.setTargetDate} 
                                             className="form-control"
                                         />

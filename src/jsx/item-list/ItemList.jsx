@@ -79,7 +79,7 @@ export default class ItemList extends React.Component {
     }
 
     deleteItem(id) {
-        fetch(`/api/items/${id}`, {
+        fetch(`/api/item/${id}`, {
             method: 'DELETE',
         })
         .then((response) => {
@@ -87,6 +87,7 @@ export default class ItemList extends React.Component {
                 alert('Failed to delete issue');
             } else {
                 this.loadItemsData();
+                alert('The item successfully deleted.');
             }
         });
     }
