@@ -9,4 +9,8 @@ function createRandomID() {
     return '_' + Math.random().toString(36).substr(2, 9);
 };
 
-export { isEmpty, createRandomID }
+function sum(a, b) {
+    return a + b;
+}
+
+export { isEmpty, createRandomID, sum }

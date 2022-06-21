@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import SourceMapSupport from 'source-map-support';
 
 import { mongoAltas } from '../credential';
