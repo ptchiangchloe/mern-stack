@@ -18,7 +18,7 @@ Node Requirement:
 
 ### Installing
 
-Install all the node modules that this project requires. 
+Install all the nod
 ```
 npm install 
 ```
@@ -41,15 +41,14 @@ npm run start-hook
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+This app is currently using [Jest](https://jestjs.io/docs/getting-started) Testing Framework. 
 
-### Break down into end to end tests
-
-Explain what these tests test and why
+### To Start the test
 
 ```
-Give an example
+npm test
 ```
+
 
 ### And coding style tests
 
