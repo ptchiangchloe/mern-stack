@@ -1,4 +1,4 @@
-const itemFieldType = {
+export const itemFieldType = {
     brand: 'required',
     category: 'optional',
     color: 'optional',
@@ -47,4 +47,4 @@ function convertIssue(item) {
     return cleanupItem(item);
 }
 
-export default { validateItem, convertIssue, cleanupItem };
+export { validateItem, convertIssue };
