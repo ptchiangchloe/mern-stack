@@ -9,6 +9,17 @@ import CreateBrandLabel from '../CreateBrandLabel';
 
 const log = debug('app:issueList');
 
+export async function loadItemData(apiLocation) {
+    try {
+        const result = await fetch(apiLocation);
+        const data = await result.json();
+        console.log(data.records)
+        return data.records;
+    } catch(e) {
+        return null;
+    }
+}
+
 export default class ItemList extends React.Component {
     constructor() {
         super();
@@ -23,6 +34,7 @@ export default class ItemList extends React.Component {
 
     componentDidMount() {
         this.loadItemsData();
+        loadItemData('http://localhost:8000/api/items')
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -37,6 +49,7 @@ export default class ItemList extends React.Component {
     }
 
     loadItemsData() {
+        console.log(this.props.location.search)
         fetch(`/api/items${this.props.location.search}`).then((response) => {
             if (response.ok) {
                 response.json().then((data) => {
@@ -50,6 +63,7 @@ export default class ItemList extends React.Component {
             }
         }).catch((err) => {
             log(err);
+            return null;
         });
     }
 
