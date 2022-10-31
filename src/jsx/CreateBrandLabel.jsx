@@ -78,14 +78,37 @@ export default class CreateBrandLabel extends React.Component {
 
     render() {
         return (
-            <div className="modalContainer">
-                This is CreateBrandLabel form. Create a label if you are not seeing it in the list.
-                <form className="" onSubmit={this.handleFormSubmit.bind(this)}>
-                    <div className="form-group">
-                        <label className="">Brand Name</label>
-                        <input value={this.state.brand} onChange={this.handleChange.bind(this)}></input>
+            <div className="modal-container create-brand-modal">
+                <div>
+                    <button 
+                        className="btn btn-primary" 
+                        type="button" 
+                        data-toggle="modal" 
+                        data-target="#create-brand"
+                    >
+                        Create a new brand label 
+                    </button>
+                </div>
+                <div className="modal fade" tabIndex="-1" role="dialog" id="create-brand">
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h4 className="modal-title">Create a new brand label</h4>
+                                <button type="button" className="close" data-dismiss="modal">
+                                    <span>&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <form className="" onSubmit={this.handleFormSubmit.bind(this)}>
+                                    <div className="form-group">
+                                        <label className="">Brand Name</label>
+                                        <input value={this.state.brand} onChange={this.handleChange.bind(this)}></input>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                </form>
+                </div>
             </div>
         )
     }

@@ -64,7 +64,7 @@ export default class CreateItem extends React.Component{
         const {targetDate, targetBrand} = this.state;
         console.log(targetDate)
         return (
-            <div className="modal-container">
+            <div className="modal-container create-item-modal">
                 <div>
                     <button 
                         className="btn btn-primary" 

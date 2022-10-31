@@ -4,6 +4,7 @@ import * as React from 'react';
 import 'whatwg-fetch';
 import debug from 'debug';
 import ItemTable from './ItemTable';
+import '../../scss/ItemList.scss';
 import CreateItem from '../item-create/CreateItem';
 import CreateBrandLabel from '../CreateBrandLabel';
 
@@ -96,16 +97,18 @@ export default class ItemList extends React.Component {
         const { items, brands } = this.state;
 
         return (
-            <div className="container">
+            <div className="container app-container">
                 <ItemTable
                     items={items}
                     deleteItem={this.deleteItem}
                 />
                 <hr />
-                <CreateItem
-                    createItem={this.createItem}
-                />
-                <CreateBrandLabel/>
+                <div className="button-container">
+                    <CreateItem
+                        createItem={this.createItem}
+                    />
+                    <CreateBrandLabel/>
+                </div>
             </div>
         );
     }
