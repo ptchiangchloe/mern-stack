@@ -13,7 +13,8 @@ These instructions will get you a copy of the project up and running on your loc
 Node Requirement: 
 
 ```
-"node": ">=14.0.0"
+"node": "14.0.0"
+Please make use 14 version.
 ```
 
 ### Installing

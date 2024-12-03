@@ -26,12 +26,13 @@ export default class CreateItem extends React.Component{
         const forms = document.forms
         // access create item form inputs. 
         const form = forms.itemAdding;
-        const {brand, category, color, purchaseDate, note} = form;
+        const {brand, category, color, purchaseDate, note, size} = form;
 
         createItem({
             brand: brand.value,
             category: category.value,
             color: color.value,
+            size: size.value,
             purchaseDate: purchaseDate.value,
             note: note.value
         });
