@@ -16,7 +16,7 @@ export default class ItemEditForm extends React.Component {
             <div className="form-container">
                 <form onSubmit={handleSubmit} >
                     <div className="form-group">
-                        <label>ID: {item._id}</label>
+                        <label>Product ID: {item._id}</label>
                     </div>
                     <ItemBrandForm handleChange={handleChange} selectedBrand={item.brand} />
                     <ItemCategoryForm handleChange={handleChange} selectedCategory={item.category} />
