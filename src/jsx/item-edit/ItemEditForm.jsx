@@ -25,7 +25,7 @@ export default class ItemEditForm extends React.Component {
                     <ItemDateForm handleChange={handleDateChange} selectedDate={item.purchaseDate} />
                     <ItemNoteForm handleChange={handleChange} note={item.note} />
                     <button type="submit">Submit</button>
-                    <Link to="/issues">Back to item list</Link>
+                    <Link to="/items">Back to item list</Link>
                 </form>
             </div>
         )

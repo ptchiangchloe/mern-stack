@@ -24,7 +24,7 @@ const RoutedApp = () => (
                     path="/"
                     render={() => (<Redirect to={{ pathname: '/issues' }} />)}
                 />
-                <Route exact path="/issues" component={withRouter(ItemList)} />
+                <Route exact path="/items" component={withRouter(ItemList)} />
                 <Route exact path="/items/:id" component={ItemEdit} />
                 <Route path="*" component={NoMatch} />
             </Switch>
