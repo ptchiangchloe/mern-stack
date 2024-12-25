@@ -1,30 +1,39 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     mode: 'development',
     devServer: {
         port: 8000,
-        contentBase: 'static',
-        proxy: {
-            '/api/*': {
-                target: 'http://localhost:4000',
-            },
-        },
+        static: './dist',
         historyApiFallback: true,
+        proxy: [
+            {
+              context: ['/api'],
+              target: 'http://localhost:4000',
+            }
+        ]
     },
-    devtool: 'source-map',
+    // Track down errors and warnings to their original location.
+    devtool: 'inline-source-map',
     entry: './src/jsx/App.jsx',
     output: {
-        path: path.join(__dirname, '/static'),
+        path: path.join(__dirname, '/dist'),
         filename: 'app.bundle.js',
+        clean: true,
     },
-    plugins: [],
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: 'Development',
+            template: 'static/index.html'
+          }),
+    ],
     module: {
         rules: [
             {
                 test: /\.jsx$/, // use regex
                 loader: 'babel-loader',
-                query: {
+                options: {
                     presets: ['@babel/preset-react', '@babel/preset-env'],
                     plugins: ['@babel/plugin-proposal-class-properties'],
                     // all transforms and file types other than pure JavaScript require loaders

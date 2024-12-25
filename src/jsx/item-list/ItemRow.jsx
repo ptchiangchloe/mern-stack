@@ -6,7 +6,10 @@ import DeleteItem from './DeleteItem';
 import { categories, colors, sizes } from '../ItemMeta';
 
 const ItemRow = ({ item, deleteItem }) => {
-    const categoryKey = item.category ? item.category.toLowerCase() : '';
+    const categoryKey = item.category ? item.category.toLowerCase().split(' ')[0] : '';
+
+    console.log(item)
+
     const colorKey = item.color ? item.color.toLowerCase() : '';
 
     return (

@@ -40,8 +40,6 @@ exports.add_item = function(req, res) {
         reqData.purchaseDate = new Date();
     }
 
-    console.log(reqData.purchaseDate)
-
     const newItem = new Item({
         brand: reqData.brand,
         category: reqData.category,

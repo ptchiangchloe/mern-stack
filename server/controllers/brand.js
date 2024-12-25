@@ -26,8 +26,16 @@ exports.add_brand = async function(req, response) {
     var newBrand = new Brand(newBrandName)
 
     // save model to database
-    newBrand.save(function (err, brand) {
-        if (err) return console.error(err);
-        console.log(brand['brand-name'] + " saved to brand collection.");
+    Brand.create(newBrand)
+    .then((dbRes) => {
+        console.log(dbRes);
+        response.status(200).json({
+            message: 'new brand name has been added into the db.',
+            body: dbRes,
+        });
+    })
+    .catch((error) => {
+        console.log(error);
+        error.status(500).json({ message: `Internal Server Error: ${error}` });
     });
 }

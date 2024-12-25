@@ -1,6 +1,8 @@
 import React from 'react';
 import debug from 'debug';
 const log = debug('app:CreateBrandLabel');
+import '../scss/CreateBrandLabel.scss';
+
 
 export default class CreateBrandLabel extends React.Component {
     state = {
@@ -59,8 +61,6 @@ export default class CreateBrandLabel extends React.Component {
                     alert(`post successfully.${working.message}`)
                 })   
 
-                this.props.updateBrandData();
-
                 this.setState({
                     brand: ''
                 })
@@ -101,7 +101,7 @@ export default class CreateBrandLabel extends React.Component {
                             <div className="modal-body">
                                 <form className="" onSubmit={this.handleFormSubmit.bind(this)}>
                                     <div className="form-group">
-                                        <label className="">Brand Name</label>
+                                        <label className="brand-name-label">Brand Name</label>
                                         <input value={this.state.brand} onChange={this.handleChange.bind(this)}></input>
                                     </div>
                                 </form>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import '../scss/Typography.scss';
 
 import {
     BrowserRouter as Router,
@@ -15,7 +15,7 @@ import ItemEdit from './item-edit/ItemEdit';
 const NoMatch = () => <p>Page Not Found</p>;
 
 const RoutedApp = () => (
-    <div>
+    <div className="roboto-regular">
         <Navbar />
         <Router>
             <Switch>
@@ -24,7 +24,7 @@ const RoutedApp = () => (
                     path="/"
                     render={() => (<Redirect to={{ pathname: '/issues' }} />)}
                 />
-                <Route exact path="/issues" component={withRouter(ItemList)} />
+                <Route exact path="/items" component={withRouter(ItemList)} />
                 <Route exact path="/items/:id" component={ItemEdit} />
                 <Route path="*" component={NoMatch} />
             </Switch>

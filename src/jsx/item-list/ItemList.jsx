@@ -41,8 +41,14 @@ export default class ItemList extends React.Component {
         fetch(`/api/items${this.props.location.search}`).then((response) => {
             if (response.ok) {
                 response.json().then((data) => {
-                    log(`Total count of records: ${data._metadata.total_count}`);
-                    this.setState({ items: data.records });
+                    if(data) {
+                        console.log(data);
+                        log(`Total count of records: ${data._metadata.total_count}`);
+                        this.setState({ items: data.records });
+                    } else {
+                        console.log("item data has something wrong from the server.")
+                    }
+
                 });
             } else {
                 response.json().then((error) => {
