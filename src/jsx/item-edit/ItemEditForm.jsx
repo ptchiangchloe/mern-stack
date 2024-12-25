@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../../scss/EditItemForm.scss';
 
 import { ItemCategoryForm } from '../shared/ItemCategoryForm';
 import { ItemColorForm } from '../shared/ItemColorForm';
@@ -24,8 +25,10 @@ export default class ItemEditForm extends React.Component {
                     <ItemSizeForm handleChange={handleChange} selectedSize={item.size} />
                     <ItemDateForm handleChange={handleDateChange} selectedDate={item.purchaseDate} />
                     <ItemNoteForm handleChange={handleChange} note={item.note} />
-                    <button type="submit">Submit</button>
-                    <Link to="/items">Back to item list</Link>
+                    <div className="action-container">
+                        <button type="submit">Submit</button>
+                        <Link to="/items">Back to item list</Link>
+                    </div>
                 </form>
             </div>
         )
